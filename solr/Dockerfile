@@ -1,5 +1,8 @@
 FROM marsbard/tomcat
 
+# haveged gets round the low-entropy == slow starting problem
+RUN apt-get update && apt-get install haveged
+
 VOLUME /data    # would normally be in .../solr4
 VOLUME /content # would normally be in .../alf_data/solr
 
