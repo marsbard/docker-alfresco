@@ -21,26 +21,26 @@ share:
     - /data/alfresco/share:/data
   links:
     - alfresco
- solr:
+solr:
   build: solr
   hostname: solr
   volumes:
-    - /data/alfresco/repo:/repo
-    - /data/alfresco/solr:/data
+    - "/data/alfresco/repo:/repo"
+    - "/data/alfresco/solr:/data"
   links:
     - alfresco
 postgresql:
   hostname: postgresql
   image: sameersbn/postgresql
   volumes:
-    - /data/alfresco/postgresql:/var/lib/postgresql
+    - "/data/alfresco/postgresql:/var/lib/postgresql"
   environment:
     DB_NAME: alfresco
     DB_USER: alfresco
     DB_PASS: alfresco
 postfix:
   hostname: postfix
-  image: catatnight/postfix
+  image: "catatnight/postfix"
   ports:
     - "25:25"
   environment: 
