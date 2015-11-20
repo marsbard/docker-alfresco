@@ -25,15 +25,16 @@ solr:
   build: solr
   hostname: solr
   volumes:
-    - "/data/alfresco/repo:/repo"
-    - "/data/alfresco/solr:/data"
+    - /data/alfresco/repo:/repo
+    - /data/alfresco/solr/data:/data
+    - /data/alfresco/solr/content:/content
   links:
     - alfresco
 postgresql:
   hostname: postgresql
   image: sameersbn/postgresql
   volumes:
-    - "/data/alfresco/postgresql:/var/lib/postgresql"
+    - /data/alfresco/postgresql:/var/lib/postgresql
   environment:
     DB_NAME: alfresco
     DB_USER: alfresco
