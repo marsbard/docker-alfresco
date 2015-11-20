@@ -32,6 +32,8 @@ share:
 postgresql:
   hostname: postgresql
   image: sameersbn/postgresql
+  volumes:
+    - /data/alfresco/postgresql:/var/lib/postgresql
   environment:
     DB_NAME: alfresco
     DB_USER: alfresco
