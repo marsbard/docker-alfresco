@@ -1,6 +1,4 @@
 FROM marsbard/tomcat
 
-RUN wget -O /tomcat/webapps/share.war https://artifacts.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/share/5.0.d/share-5.0.d.war
-
-
+COPY share.war /tomcat/webapps/share.war
 

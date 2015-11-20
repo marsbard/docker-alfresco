@@ -1,6 +1,4 @@
 FROM marsbard/tomcat
 
-RUN wget -O /tomcat/webapps/solr4.war https://artifacts.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-solr4/5.0.d/alfresco-solr4-5.0.d-ssl.war
-
-
+COPY solr4.war /tomcat/webapps
 
