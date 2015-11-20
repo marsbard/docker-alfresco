@@ -1,0 +1,26 @@
+alfresco:
+  build: alfresco
+  expose: 8080
+  links: 
+    - postgresql
+  volumes: 
+    - /data/alfresco/repo:/data
+share:
+  build: share
+  expose: 8080
+  volumes: 
+    - /data/alfresco/share:/data
+  links:
+    - alfresco
+solr:
+  build: solr
+  volumes:
+    - /data/alfresco/repo:/repo
+    - /data/alfresco/solr:/data
+  links:
+    - alfresco
+postgresql:
+  image: sameersbn/postgresql
+  environment:
+    DB_NAME: alfresco
+    DB_PASS: alfresco
