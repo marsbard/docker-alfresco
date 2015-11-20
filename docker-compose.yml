@@ -2,32 +2,33 @@ alfresco:
   build: alfresco
   hostname: alfresco
   expose: 
-    - 7070
-    - 8080
+    - "2021"
+    - "7070"
+    - "8080"
   links: 
     - postgresql
-    - postfix
+      # - postfix
   volumes: 
     - /data/alfresco/repo:/data
-share:
-  build: share
-  hostname: share
-  expose:
-    - 8080
-  ports:
-    - "8080:8080"
-  volumes: 
-    - /data/alfresco/share:/data
-  links:
-    - alfresco
-solr:
-  build: solr
-  hostname: solr
-  volumes:
-    - /data/alfresco/repo:/repo
-    - /data/alfresco/solr:/data
-  links:
-    - alfresco
+# share:
+#  build: share
+#  hostname: share
+#  expose:
+#    - 8080
+#  ports:
+#    - "8080:8080"
+#  volumes: 
+#    - /data/alfresco/share:/data
+#  links:
+#    - alfresco
+#solr:
+#  build: solr
+#  hostname: solr
+#  volumes:
+#    - /data/alfresco/repo:/repo
+#    - /data/alfresco/solr:/data
+#  links:
+#    - alfresco
 postgresql:
   hostname: postgresql
   image: sameersbn/postgresql
@@ -35,10 +36,12 @@ postgresql:
     DB_NAME: alfresco
     DB_USER: alfresco
     DB_PASS: alfresco
-postfix:
-  hostname: postfix
-  image: catatnight/postfix
-  ports: "25:25"
-  environment: 
-    maildomain: alfresco.local
-    smtp_user: mailuser:password
+#postfix:
+#  hostname: postfix
+#  image: catatnight/postfix
+#  ports:
+#    - "25:25"
+#  environment: 
+#    maildomain: "alfresco.local"
+#    smtp_user: "mailuser:password"
+
