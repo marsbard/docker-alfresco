@@ -1,4 +1,4 @@
 FROM marsbard/tomcat
 
-COPY solr4.war /tomcat/webapps
+COPY files/tmp/solr4.war /tomcat/webapps
 
