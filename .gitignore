@@ -1,1 +1,2 @@
 .docker-compose.yml.swp
+alfresco/alfresco.war share/share.war solr/solr4.war
