@@ -1,4 +1,4 @@
 FROM marsbard/tomcat
 
-COPY share.war /tomcat/webapps/share.war
+COPY files/tmp/share.war /tomcat/webapps/share.war
 

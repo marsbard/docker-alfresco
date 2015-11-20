@@ -10,18 +10,18 @@ alfresco:
       # - postfix
   volumes: 
     - /data/alfresco/repo:/data
-# share:
-#  build: share
-#  hostname: share
-#  expose:
-#    - 8080
-#  ports:
-#    - "8080:8080"
-#  volumes: 
-#    - /data/alfresco/share:/data
-#  links:
-#    - alfresco
-#solr:
+share:
+  build: share
+  hostname: share
+  expose:
+    - 8080
+  ports:
+    - "8080:8080"
+  volumes: 
+    - /data/alfresco/share:/data
+  links:
+    - alfresco
+# solr:
 #  build: solr
 #  hostname: solr
 #  volumes:
