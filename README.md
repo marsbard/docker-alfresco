@@ -2,6 +2,7 @@
 
 Containerised alfresco
 
+* Enter working dir
 
 `cd docker-alfresco`
 
@@ -11,8 +12,10 @@ Containerised alfresco
 
 
 * Compose
+
 `docker-compose build`
 
 
 * Run
+
 `docker-compose up`
