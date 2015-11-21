@@ -1,3 +1,0 @@
-# docker-alfresco
-
-containerised alfresco
