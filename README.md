@@ -6,7 +6,7 @@ Containerised alfresco
 
 `cd docker-alfresco`
 
-* First you need to build the dependend-upon 'marsbard/tomcat' image
+* First you need to build the depended-upon 'marsbard/tomcat' image
 
 `tomcat/build.sh`
 
