@@ -12,7 +12,11 @@ COPY files/solrcore-archive.properties /config/archive-SpacesStore/conf/solrcore
 
 COPY files/tmp/alfresco-solr4-config-ssl.zip /tmp
 
+COPY files/server.xml /tomcat/conf/server.xml
+COPY files/catalina.properties /tomcat/conf/catalina.properties
 
+
+ADD files/tmp/keystore /keystore
 
 # would normally be in .../solr4
 VOLUME /data    
