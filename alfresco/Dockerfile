@@ -7,6 +7,8 @@ COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 COPY files/alfresco-global.properties /tomcat/shared/classes/alfresco-global.properties
 
+COPY files/log4j.properties /tomcat/shared/classes/alfresco/extension/log4j.properties
+
 ADD files/tmp/keystore /keystore
 
 RUN mkdir /tomcat/lib -p
