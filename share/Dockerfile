@@ -7,3 +7,8 @@ COPY files/share-config-custom.xml /tomcat/shared/classes/alfresco/web-extension
 COPY files/log4j.properties /tomcat/shared/classes/alfresco/extension/log4j.properties
 
 
+COPY files/server.xml /tomcat/conf/server.xml
+COPY files/catalina.properties /tomcat/conf/catalina.properties
+
+
+ADD files/tmp/keystore /keystore
