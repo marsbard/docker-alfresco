@@ -6,7 +6,8 @@ alfresco:
     - "7070"
     - "8080"
   links: 
-    - postgresql
+    #- postgresql
+    - mysql
     - postfix
   volumes: 
     - /data/alfresco/repo:/data
