@@ -1,18 +1,28 @@
 FROM marsbard/tomcat
 
+COPY files/tmp/solr4.war /tomcat/webapps
+
+COPY files/solr4.xml /tomcat/conf/Catalina/localhost/solr4.xml
+
+COPY files/solrconfig.xml /config/archive-SpacesStore/conf/solrconfig.xml
+COPY files/solrconfig.xml /config/workspace-SpacesStore/conf/solrconfig.xml
+
+COPY files/solrcore-workspace.properties /config/workspace-SpacesStore/conf/solrcore.properties
+COPY files/solrcore-archive.properties /config/archive-SpacesStore/conf/solrcore.properties
+
+COPY files/tmp/alfresco-solr4-config-ssl.zip /tmp
+
+
+
 # would normally be in .../solr4
 VOLUME /data    
 # would normally be in .../alf_data/solr
 VOLUME /content 
 
-COPY files/tmp/solr4.war /tomcat/webapps
+VOLUME /config
 
-COPY files/solr4.xml /tomcat/conf/Catalina/localhost/solr4.xml
 
-COPY files/solrconfig.xml /data/archive-SpacesStore/conf/solrconfig.xml
-COPY files/solrconfig.xml /data/workspace-SpacesStore/conf/solrconfig.xml
+COPY files/start.sh /
+RUN chmod +x /start.sh
 
-COPY files/solrcore-workspace.properties /data/workspace-SpacesStore/conf/solrcore.properties
-COPY files/solrcore-archive.properties /data/archive-SpacesStore/conf/solrcore.properties
-
-ADD files/tmp/alfresco-solr4-config-ssl.zip /data
+CMD ["/start.sh"]

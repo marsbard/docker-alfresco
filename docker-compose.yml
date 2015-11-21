@@ -8,6 +8,7 @@ alfresco:
   links: 
     #- postgresql
     - mysql
+    - solr
     - postfix
   volumes: 
     - /data/alfresco/repo:/data
@@ -26,11 +27,8 @@ solr:
   build: solr
   hostname: solr
   volumes:
-    - /data/alfresco/repo:/repo
     - /data/alfresco/solr/data:/data
     - /data/alfresco/solr/content:/content
-  links:
-    - alfresco
 #postgresql:
 #  hostname: postgresql
 #  image: sameersbn/postgresql
