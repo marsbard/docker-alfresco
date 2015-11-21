@@ -48,7 +48,7 @@ mysql:
   environment:
     MYSQL_DATABASE: alfresco
     MYSQL_USER: alfresco
-    MYSQL_PASS: alfresco
+    MYSQL_PASSWORD: alfresco
     MYSQL_ROOT_PASSWORD: alfresco
 postfix:
   hostname: postfix
