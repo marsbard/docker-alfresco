@@ -1,17 +1,16 @@
 consul:
-  hostname: consul
-  net: host
   expose:
     - 8500
+  ports: 
+    - "8500:8500"
   image: gliderlabs/consul-server
   command: "-bootstrap"
 registrator:
-  hostname: registrator
   image: gliderlabs/registrator:latest
   net: host
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock
-  command: "consul://consul:8500"
+  command: "consul://localhost:8500"
 alfresco:
   build: alfresco
   hostname: alfresco
