@@ -1,8 +1,6 @@
 #!/bin/bash
 
-pushd tomcat
-docker build -t marsbard/tomcat .
-popd
-pushd registrator
-docker build -t marsbard/registrator .
-popd
+cd "`dirname $0`"
+
+docker build -f Dockerfile.dev -t marsbard/tomcat tomcat
+docker build -t marsbard/registrator:latest registrator

@@ -8,9 +8,11 @@
 #
 # so I just need to wait a bit, or ideally check for consul to be up
 
-FROM progrium/registrator
+FROM gliderlabs/registrator
 
 COPY files/start.sh /start.sh
 RUN chmod +x /start.sh
 
-CMD ["/start.sh"] 
+#CMD ["/start.sh"] 
+
+ENTRYPOINT "/start.sh"

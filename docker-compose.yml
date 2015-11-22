@@ -6,7 +6,7 @@ consul:
   image: gliderlabs/consul-server
   command: "-bootstrap"
 registrator:
-  image: gliderlabs/registrator:latest
+  image: marsbard/registrator:latest
   net: host
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock
