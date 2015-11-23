@@ -1,6 +1,10 @@
 #!/bin/sh
 
-docker run -t alfresco_consul \
+set -ex
+
+docker rm -f consul registrator || true
+
+docker run \
 	-d \
 	--hostname consul \
 	--name consul \
@@ -9,10 +13,11 @@ docker run -t alfresco_consul \
 
 docker build -t marsbard/registrator consul/registrator
 
-docker run -t alfresco_registrator \
+docker run \
 	-d \
-	--hostname registrator \
+	--net host \
 	--name registrator \
-	-v /var/run/docker.sock:/tmp/docker.sock
+	-v /var/run/docker.sock:/tmp/docker.sock \
   marsbard/registrator consul://consul:8500
+	#--hostname registrator \
 

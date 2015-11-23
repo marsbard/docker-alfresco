@@ -32,6 +32,9 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
 
 RUN rm -fr /tomcat/webapps/*
 
+COPY etcd-bootstrap.sh /etc/rc.local
+RUN chmod +x /etc/rc.local
+
 EXPOSE 8080
 
 ENV CATALINA_HOME /tomcat
