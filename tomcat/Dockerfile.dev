@@ -4,7 +4,8 @@
 
 FROM ubuntu-upstart:trusty
 
-RUN apt-get install -y --no-install-recommends  software-properties-common telnet netcat curl elinks
+RUN apt-get remove -y netcat-openbsd || true
+RUN apt-get install -y --no-install-recommends  software-properties-common telnet netcat-traditional curl elinks
 
 RUN sysctl net.ipv6.bindv6only=0 && sysctl net.ipv6.conf.all.forwarding=1
 
