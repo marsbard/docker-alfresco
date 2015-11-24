@@ -15,6 +15,7 @@ consul:
   image: gliderlabs/consul-server
   ports:
     - "8500:8500"
+  entrypoint: "/bin/consul agent -server -config-dir=/config -bootstrap-expect 1"
 alfresco:
   build: alfresco
   hostname: alfresco
