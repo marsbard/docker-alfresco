@@ -1,13 +1,13 @@
-dns:
-  build: dns
-  hostname: dns
-  expose:
-    - 53
-    - 8053
-  volumes: 
-    - "/data/alfresco/dns:/data"
-  ports:
-    - "8053:8053"
+#dns:
+#  build: dns
+#  hostname: dns
+#  expose:
+#    - 53
+#    - 8053
+#  volumes: 
+#    - "/data/alfresco/dns:/data"
+#  ports:
+#    - "8053:8053"
 haveged:
   image: harbur/haveged:1.7c-1
   privileged: true
@@ -23,7 +23,7 @@ alfresco:
     - "7070"
     - "8080"
   links: 
-    - dns
+    - consul
     - mysql
     - solr
     - postfix
@@ -42,7 +42,7 @@ share:
     - /data/alfresco/share:/data
   links:
     - alfresco
-    - dns
+    - consul
 solr:
   build: solr
   hostname: solr
@@ -50,7 +50,7 @@ solr:
     - /data/alfresco/solr/data:/data
     - /data/alfresco/solr/content:/content
   links: 
-    - dns
+    - consul
 #postgresql:
 #  hostname: postgresql
 #  image: sameersbn/postgresql

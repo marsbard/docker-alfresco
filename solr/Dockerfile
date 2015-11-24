@@ -29,4 +29,4 @@ VOLUME /config
 COPY files/start.sh /
 RUN chmod +x /start.sh
 
-CMD ["/dns-bootstrap.sh", "/start.sh"]
+CMD ["/consul-bootstrap.sh", "/start.sh"]
