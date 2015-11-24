@@ -2,6 +2,7 @@
 
 cd "`dirname $0`"
 
+./get.sh
 ./run-skydock.sh
 ./buildimages.sh
 
