@@ -8,6 +8,13 @@ dns:
     - "/data/alfresco/dns:/data"
   ports:
     - "8053:8053"
+haveged:
+  image: harbur/haveged:1.7c-1
+  privileged: true
+consul:
+  image: gliderlabs/consul-server
+  ports:
+    - "8500:8500"
 alfresco:
   build: alfresco
   hostname: alfresco
