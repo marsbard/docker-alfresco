@@ -2,6 +2,7 @@
 
 cd "`dirname $0`"
 
+./run-skydock.sh
 ./buildimages.sh
 
 docker-compose build
