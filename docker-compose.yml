@@ -6,6 +6,8 @@ dns:
     - 8053
   volumes: 
     - "/data/alfresco/dns:/data"
+  ports:
+    - "8053:8053"
 alfresco:
   build: alfresco
   hostname: alfresco

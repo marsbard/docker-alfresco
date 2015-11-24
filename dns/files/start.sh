@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# set up the environment
+mkdir -p /data/data.d
+
+cp /tmp/{tinydns.data,axfrdns.tcp} /data
+
 # run the passed in arguments in the background
 $* &
 

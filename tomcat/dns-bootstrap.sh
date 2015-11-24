@@ -2,6 +2,8 @@
 
 NET=$( route -n | grep UG | xargs | cut -f2 -d' ' | cut -f1-3 -d. )
 
+sleep 2
+
 for n in `seq 2 254`
 do
 	(
@@ -34,7 +36,7 @@ then
 	# and use that to get my IP
 	MY_IP=$( ip addr | grep ${DEFAULT_DEV}  | grep inet | xargs | cut -f2 -d' ' | cut -f1 -d/ )
 
-	curl -L http://${DNS_HOST}:8053/$(hostname)=${MY_IP}
+	curl -L http://${DNS_HOST}:8053/?host=$(hostname)&ip=${MY_IP}
 fi 
 
 echo -e "nameserver ${DNS_HOST}\nnameserver 8.8.8.8" > /etc/resolv.conf
