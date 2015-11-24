@@ -1,21 +1,20 @@
 FROM skurtzemann/tinydns
 
-VOLUME /data
+
+RUN apt-get update && apt-get -y remove netcat-openbsd && apt-get -y install netcat-traditional
 
 EXPOSE 53
 EXPOSE 8053
 
+RUN mkdir -p /data/data.d
+COPY files/tinydns.data /data
+COPY files/axfrdns.tcp /data
 
-COPY listener.sh /
-COPY run-listener.sh /
-COPY start.sh /
+COPY files/listener.sh /
+COPY files/run-listener.sh /
+COPY files/start.sh /
 RUN chmod +x /*.sh
 
-
-# tinydns uses a 'data' file, unfortunate clash with my 'data' naming convention for the data volume.
-# gonna make the listener write to separate records in data.d and concatenate them all into a data
-# file to be converted into tinydns config
-RUN mkdir -p /data/data.d
-
+VOLUME /data
 
 CMD /start.sh /run-listener.sh

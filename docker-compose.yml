@@ -1,3 +1,11 @@
+dns:
+  build: dns
+  hostname: dns
+  expose:
+    - 53
+    - 8053
+  volumes: 
+    - "/data/alfresco/dns:/data"
 alfresco:
   build: alfresco
   hostname: alfresco
@@ -6,7 +14,7 @@ alfresco:
     - "7070"
     - "8080"
   links: 
-    #- postgresql
+    - dns
     - mysql
     - solr
     - postfix
@@ -25,12 +33,15 @@ share:
     - /data/alfresco/share:/data
   links:
     - alfresco
+    - dns
 solr:
   build: solr
   hostname: solr
   volumes:
     - /data/alfresco/solr/data:/data
     - /data/alfresco/solr/content:/content
+  links: 
+    - dns
 #postgresql:
 #  hostname: postgresql
 #  image: sameersbn/postgresql
