@@ -13,35 +13,35 @@ NET=$( route -n | grep UG | xargs | cut -f2 -d' ' | cut -f1-3 -d. )
 
 
 decho Short delay just to make sure Consul is up first
-sleep 3
+sleep 6
 
-for n in `seq 2 254`
-do
-	(
-		nc -z -w 1 ${NET}.${n} 53
-		if [ $? = 0 ]
-		then
-			decho Bootstrapping consul at ${NET}.${n}
-			echo ${NET}.${n} > /CONSUL_HOST
-		fi
-	) &
-done
+#for n in `seq 2 254`
+#do
+#	(
+#		nc -z -w 1 ${NET}.${n} 53
+#		if [ $? = 0 ]
+#		then
+#			decho Bootstrapping consul at ${NET}.${n}
+#			echo ${NET}.${n} > /CONSUL_HOST
+#		fi
+#	) &
+#done
+#
+#WAIT=10
+#WAITED=0
+#
+#while [ $WAITED -lt $WAIT ]
+#do
+#	WAITED=$(( $WAITED + 1 ))
+#	if [ -f /CONSUL_HOST ]
+#	then
+#		WAITED=$WAIT
+#	fi
+#	sleep 1
+#done
+#
 
-WAIT=10
-WAITED=0
-
-while [ $WAITED -lt $WAIT ]
-do
-	WAITED=$(( $WAITED + 1 ))
-	if [ -f /CONSUL_HOST ]
-	then
-		WAITED=$WAIT
-	fi
-	sleep 1
-done
-
-
-export CONSUL_HOST=$(cat /CONSUL_HOST)
+#export CONSUL_HOST=$(cat /CONSUL_HOST)
 if [ -n $CONSUL_HOST ]
 then
 	# get device which has the gateway
@@ -50,11 +50,9 @@ then
 	MY_IP=$( ip addr | grep ${DEFAULT_DEV}  | grep inet | xargs | cut -f2 -d' ' | cut -f1 -d/ )
 	decho "Registering my IP ${MY_IP} and hostname ${hostname} with http://${CONSUL_HOST}:8500/"
   
-	JSONDOC="{'Datacenter':'dc1','Node':'$HOST','Address':'$MY_IP',\
-		'Service':{'ID':'${HOST}1','Service':'$HOST','Address':'$MY_IP','Port':8080}}"
-	echo $JSONDOC
-	
-	curl -H "Content-Type: application/json" -X PUT -d $JSONDOC  "http://${CONSUL_HOST}:${PORT}/v1/catalog/register"
+	#curl -H "Content-Type: application/json" -X PUT -d $JSONDOC  "http://${CONSUL_HOST}:${PORT}/v1/catalog/register"
+	decho consulate register --api-host $CONSUL_HOST -a $MY_IP -p 8080 -s $HOST $HOST 
+	consulate register --api-host $CONSUL_HOST -a $MY_IP -p 8080 -s $HOST $HOST 
 fi 
 
 decho Set up resolv.conf

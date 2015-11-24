@@ -21,7 +21,7 @@ alfresco:
     - "8081:8080"
   volumes: 
     - /data/alfresco/repo:/data
-  dns: 172.17.0.1
+  dns: <%SKYDNS%>
 share:
   build: share
   hostname: share
@@ -33,14 +33,14 @@ share:
     - /data/alfresco/share:/data
   links:
     - alfresco
-  dns: 172.17.0.1
+  dns: <%SKYDNS%>
 solr:
   build: solr
   hostname: solr
   volumes:
     - /data/alfresco/solr/data:/data
     - /data/alfresco/solr/content:/content
-  dns: 172.17.0.1
+  dns: <%SKYDNS%>
 mysql:
   hostname: mysql
   image: "mysql:5.6"
@@ -51,7 +51,7 @@ mysql:
     MYSQL_USER: alfresco
     MYSQL_PASSWORD: alfresco
     MYSQL_ROOT_PASSWORD: alfresco
-  dns: 172.17.0.1
+  dns: <%SKYDNS%>
 postfix:
   hostname: postfix
   image: "catatnight/postfix"
@@ -60,4 +60,4 @@ postfix:
   environment: 
     maildomain: "alfresco.local"
     smtp_user: "mailuser:password"
-  dns: 172.17.0.1
+  dns: <%SKYDNS%>

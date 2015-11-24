@@ -11,13 +11,16 @@ docker run \
 	-p 8500:8500 \
 	gliderlabs/consul-server -bootstrap
 
-docker build -t marsbard/registrator consul/registrator
+#docker build -t marsbard/registrator consul/registrator
+#
+#docker run \
+#	-d \
+#	--net host \
+#	--name registrator \
+#	-v /var/run/docker.sock:/tmp/docker.sock \
+#  marsbard/registrator consul://consul:8500
+#	#--hostname registrator \
 
-docker run \
-	-d \
-	--net host \
-	--name registrator \
-	-v /var/run/docker.sock:/tmp/docker.sock \
-  marsbard/registrator consul://consul:8500
-	#--hostname registrator \
+
+export CONSUL_HOST=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' consul`
 

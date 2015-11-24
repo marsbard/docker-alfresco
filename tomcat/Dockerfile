@@ -8,17 +8,18 @@ RUN apt-get remove -y netcat-openbsd || true
 RUN apt-get update && apt-get install -y --no-install-recommends  \
 	software-properties-common telnet netcat-traditional curl elinks dnsutils
 
-RUN sysctl net.ipv6.bindv6only=0 && sysctl net.ipv6.conf.all.forwarding=1
 
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get install -yq --force-yes --no-install-recommends oracle-java8-installer  \
-	  unzip \
+	  unzip python-pip \
     curl pwgen wget ca-certificates && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
+
+RUN pip install consulate
 
 
 # Define commonly used JAVA_HOME variable
@@ -38,12 +39,12 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
 RUN rm -fr /tomcat/webapps/*
 
 
-COPY consul-bootstrap.sh /
-RUN chmod +x /consul-bootstrap.sh
+#COPY consul-bootstrap.sh /
+#RUN chmod +x /consul-bootstrap.sh
 
 EXPOSE 8080
 
 ENV CATALINA_HOME /tomcat
-CMD ["/consul-bootstrap.sh", "/tomcat/bin/catalina.sh",  "run"]
+#CMD ["/consul-bootstrap.sh", "/tomcat/bin/catalina.sh",  "run"]
 
-
+CMD ["/tomcat/bin/catalina.sh", "run"]
