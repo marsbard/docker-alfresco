@@ -4,7 +4,11 @@
 
 FROM ubuntu-upstart:trusty
 
-RUN apt-get install -y --no-install-recommends  software-properties-common telnet netcat
+RUN apt-get remove -y netcat-openbsd || true
+RUN apt-get install -y --no-install-recommends  software-properties-common telnet netcat-traditional curl elinks dnsutils
+
+RUN sysctl net.ipv6.bindv6only=0 && sysctl net.ipv6.conf.all.forwarding=1
+
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
@@ -32,11 +36,13 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
 
 RUN rm -fr /tomcat/webapps/*
 
-COPY etcd-bootstrap.sh /etc/rc.local
-RUN chmod +x /etc/rc.local
+
+COPY dns-bootstrap.sh /
+RUN chmod +x /dns-bootstrap.sh
 
 EXPOSE 8080
 
 ENV CATALINA_HOME /tomcat
-CMD ["/tomcat/bin/catalina.sh",  "run"]
+CMD ["/dns-bootstrap.sh", "/tomcat/bin/catalina.sh",  "run"]
+
 
