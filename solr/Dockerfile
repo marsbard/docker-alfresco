@@ -16,6 +16,8 @@ COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 
 #COPY files/catalina.sh.debug /tomcat/bin/catalina.sh
+COPY files/lof4j-solr.properties /config
+
 
 ADD files/tmp/keystore /keystore
 
