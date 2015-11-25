@@ -1,0 +1,7 @@
+
+./amc pull
+
+Pulls all the required docker images. 
+
+It is actually not necessary to run this directly as "./amc up" will pull the images
+if they are not already down.

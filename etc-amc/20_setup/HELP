@@ -1,0 +1,5 @@
+amc setup
+
+* Get all the dependencies 
+* Pull required containers
+* Build the tomcat container used for the alfresco components.
