@@ -1,0 +1,3 @@
+amc stop
+
+Stop the composed alfresco containers.

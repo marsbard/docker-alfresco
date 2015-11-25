@@ -1,1 +1,1 @@
-Run all of "amc {getdeps,pull,buildimages}"
+Set up docker-compose.yml

@@ -1,0 +1,9 @@
+amc destroy
+
+Remove all images related to the composition
+
+First 'stop' and 'cleacleann' will be run
+
+
+Be aware that the image 'marsbard/tomcat' will be removed and so you will need to run
+"./amc buildimages" once more to run the composition again.

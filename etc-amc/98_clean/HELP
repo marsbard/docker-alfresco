@@ -1,0 +1,4 @@
+amc clean
+
+Remove all docker containers related to the alfresco composition.
+
