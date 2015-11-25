@@ -7,7 +7,7 @@ for image in \
 	catatnight/postfix \
 	crosbymichael/skydns \
 	crosbymichael/skydock \
-	ubuntu-upstart:trusty
+	ubuntu-upstart:trusty 
 do
 	echo [$image]
   docker pull $image
