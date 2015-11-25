@@ -1,0 +1,9 @@
+amc setup
+
+Regenerates docker-compose.yml
+
+Normally this only needs to be done whenever docker-compose.yml.template has changed,
+in everyday use you probably only ever need to run this once.
+
+Oh you might have to run it again if for some reason your docker bridge address changes
+on this host
