@@ -2,3 +2,4 @@
 *.war
 *.jar
 */files/tmp/*
+docker-compose.yml
