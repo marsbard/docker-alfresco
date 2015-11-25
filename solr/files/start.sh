@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # has to happen after the data store is mounted
 if [ ! -f  /data/workspace-SpacesStore/conf/solrconfig.xml ]
