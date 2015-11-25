@@ -1,4 +1,4 @@
 set -m
-docker-compose up &
+docker-compose -p alfresco up &
 echo $! > /tmp/amc-pid
 fg
