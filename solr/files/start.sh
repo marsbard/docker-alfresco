@@ -10,6 +10,4 @@ then
 	cp -rv /config/* /data
 fi
 
-cp /config/log4j-solr.properties /data
-
 /tomcat/bin/catalina.sh run
