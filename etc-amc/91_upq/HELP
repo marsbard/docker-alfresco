@@ -1,0 +1,4 @@
+amc upq
+
+Start up all the containers, but quickly, without re-running the pre-requisite
+stages
