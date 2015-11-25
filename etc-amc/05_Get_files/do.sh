@@ -1,7 +1,9 @@
 #!/bin/bash
 
-for filename in */get.sh
+echo Getting alfresco dependencies
+
+for dir in alfresco share solr
 do
-	echo Running $filename
-  $filename 
+	echo Running $dir/get
+  $dir/get.sh
 done

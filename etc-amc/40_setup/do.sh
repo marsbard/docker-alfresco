@@ -1,11 +1,18 @@
 
+echo Setting up, finding bridge IP and creating docker-compose.yml
+
 BRIDGE_IP=$( ip addr | grep -A2 docker0: | grep inet | xargs | cut -f2 -d' ' | cut -f1 -d/ )
 
 if [ -z $BRIDGE_IP ]
 then
+	BRIDGE_IP=$1
+fi
+
+if [ -z $BRIDGE_IP ]
+then
 	echo Sorry, could not find BRIDGE_IP, please re-run setup with the correct ip, e.g.:
-	echo ./amc setup 172.17.0.1
-	exit
+	echo $ amc setup 172.17.0.1
+	exit 1
 fi
 
 if [ -f docker-compose.yml ]

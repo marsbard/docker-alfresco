@@ -1,5 +1,4 @@
-
-set -e
+echo Pulling docker images
 
 for image in \
 	harbur/haveged:1.7c-1 \

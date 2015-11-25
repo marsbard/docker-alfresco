@@ -1,24 +1,27 @@
 #!/bin/bash
 
-alias echo2="echo [$*]"
-
 cd "`dirname $0`"
+
+set -e
 
 ROOT="etc-amc"
 
-# dirs under amc-etc should be numeric prefixed, e.g. NN_dirname
 dirs=`ls -F $ROOT | grep /`
 
 
 if [ "$1" = "" ]
 then
-	echo amc - Alfresco Multi Container
+	echo
+	echo "        amc - Alfresco Multi Container"
+	echo "        ------------------------------"
+	echo 
 	echo The following commands are available:
 	echo
 	for dir in $dirs
 	do
 		echo  "amc `cat $ROOT/$dir/CMD` - `cat $ROOT/$dir/INFO`"
 	done
+	echo
 elif [ "$1" == "help" ]
 then
 	if [ -z "$2" ]
