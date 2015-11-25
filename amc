@@ -17,7 +17,7 @@ then
 	echo
 	for dir in $dirs
 	do
-		echo  "./amc `cat $ROOT/$dir/CMD` - `cat $ROOT/$dir/INFO`"
+		echo  "amc `cat $ROOT/$dir/CMD` - `cat $ROOT/$dir/INFO`"
 	done
 elif [ "$1" == "help" ]
 then
@@ -29,6 +29,9 @@ then
 		do
 			if [ -f $ROOT/$dir/CMD -a "$(cat $ROOT/$dir/CMD)" == $2 ]
 			then
+				echo
+				echo
+				echo "amc $(cat $ROOT/$dir/CMD)"
 				echo
 				cat $ROOT/$dir/HELP
 				echo

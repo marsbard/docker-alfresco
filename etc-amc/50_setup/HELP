@@ -1,5 +1,3 @@
-amc setup
-
 Regenerates docker-compose.yml
 
 Normally this only needs to be done whenever docker-compose.yml.template has changed,
