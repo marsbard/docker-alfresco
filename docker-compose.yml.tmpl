@@ -1,18 +1,18 @@
 haveged:
   image: harbur/haveged:1.7c-1
   privileged: true
-skydns:
-  image: crosbymichael/skydns
-  name: skydns
-  ports:
-    - "<%SKYDNS%>:53:53/udp"
-  command: "-nameserver 8.8.8.8:53 -domain docker"
-skydock:
-  image: crosbymichael/skydock
-  name: skydock
-  volumes: 
-    - /var/run/docker.sock:/docker.sock
-  command: "-ttl 30 -environment ns -s /docker.sock -domain docker"
+#skydns:
+#  image: crosbymichael/skydns
+#  name: skydns
+#  ports:
+#    - "<%SKYDNS%>:53:53/udp"
+#  command: "-nameserver 8.8.8.8:53 -domain docker"
+#skydock:
+#  image: crosbymichael/skydock
+#  name: skydock
+#  volumes: 
+#    - /var/run/docker.sock:/docker.sock
+#  command: "-ttl 30 -environment ns -s /docker.sock -domain docker"
 alfresco:
   build: alfresco
   hostname: alfresco
