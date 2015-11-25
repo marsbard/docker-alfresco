@@ -15,7 +15,7 @@ COPY files/tmp/alfresco-solr4-config-ssl.zip /tmp
 COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 
-COPY files/web.xml /tomcat/webapps/solr4/WEB-INF/web.xml
+#COPY files/catalina.sh.debug /tomcat/bin/catalina.sh
 
 ADD files/tmp/keystore /keystore
 

@@ -7,7 +7,7 @@ COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 COPY files/alfresco-global.properties /tomcat/shared/classes/alfresco-global.properties
 
-COPY files/web.xml /tomcat/webapps/alfresco/WEB-INF/web.xml
+COPY files/log4j.properties /tomcat/shared/classes/log4j.properties
 
 ADD files/tmp/keystore /keystore
 
