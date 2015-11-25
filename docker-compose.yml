@@ -9,7 +9,7 @@ skydns:
     - "172.17.0.1:53:53/udp"
   command: "-nameserver 8.8.8.8:53 -domain docker"
 skydock:
-  image: crosbymichale/skydock
+  image: crosbymichael/skydock
   name: skydock
   volumes: 
     - /var/run/docker.sock:/docker.sock

@@ -6,8 +6,7 @@
 echo --- destroying images ---
 
 set -x 
-for image in alfresco_alfresco alfresco_share alfresco_solr marsbard/tomcat mysql \
-	ubuntu-upstart harbur/haveged catatnight/postfix crosbymichael/skydock crosbymichael/skydns
+for image in alfresco_alfresco alfresco_share alfresco_solr marsbard/tomcat 
 do
 	echo $image
 	docker images | grep $image 2>&1 > /dev/null

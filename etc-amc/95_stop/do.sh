@@ -6,3 +6,5 @@ then
 	kill $PID
 	rm /tmp/amc-pid
 fi
+
+docker stop $(docker ps | grep alfresco | awk '{ print $1 }')
