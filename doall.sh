@@ -6,5 +6,6 @@ cd "`dirname $0`"
 ./run-skydock.sh
 ./buildimages.sh
 
+docker-compose rm -f
 docker-compose build
 docker-compose up
