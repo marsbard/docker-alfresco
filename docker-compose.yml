@@ -13,6 +13,10 @@ alfresco:
     - "2021"
     - "7070"
     - "8080"
+  links: 
+    - mysql
+    - solr
+    - postfix
   ports:
     - "8081:8080"
   volumes: 
@@ -30,13 +34,13 @@ share:
   links:
     - alfresco
   dns: 172.17.0.1
-#solr:
-#  build: solr
-#  hostname: solr
-#  volumes:
-#    - /data/alfresco/solr/data:/data
-#    - /data/alfresco/solr/content:/content
-#  dns: 172.17.0.1
+solr:
+  build: solr
+  hostname: solr
+  volumes:
+    - /data/alfresco/solr/data:/data
+    - /data/alfresco/solr/content:/content
+  dns: 172.17.0.1
 mysql:
   hostname: mysql
   image: "mysql:5.6"
