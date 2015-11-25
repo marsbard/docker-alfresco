@@ -14,7 +14,7 @@ then
 	exit
 fi
 
-if ! docker ps | grep skydns
+if ! docker ps | grep skydns 2>&1 > /dev/null
 then
 	BRIDGE_IP=$( ip addr | grep -A2 docker0: | grep inet | xargs | cut -f2 -d' ' | cut -f1 -d/ )
 
