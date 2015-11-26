@@ -4,7 +4,7 @@ cd "`dirname $0`"
 
 set -e
 
-ROOT="etc-amc"
+ROOT="etc-mca"
 
 dirs=`ls -F $ROOT | grep /`
 
@@ -12,14 +12,14 @@ dirs=`ls -F $ROOT | grep /`
 if [ "$1" = "" ]
 then
 	echo
-	echo "        amc - Alfresco Multi Container"
+	echo "        mca - Multi Container Alfresco"
 	echo "        ------------------------------"
 	echo 
 	echo The following commands are available:
 	echo
 	for dir in $dirs
 	do
-		echo  "amc `cat $ROOT/$dir/CMD` - `cat $ROOT/$dir/INFO`"
+		echo  "mca `cat $ROOT/$dir/CMD` - `cat $ROOT/$dir/INFO`"
 	done
 	echo
 	echo "For more help on a command you may try 'amd help <command>'"
@@ -51,7 +51,7 @@ then
 			if [ -f $ROOT/$dir/CMD -a "$(cat $ROOT/$dir/CMD)" == $2 ]
 			then
 				echo
-				echo "amc $(cat $ROOT/$dir/CMD)"
+				echo "mca $(cat $ROOT/$dir/CMD)"
 				echo
 				cat $ROOT/$dir/HELP
 				echo
@@ -67,7 +67,7 @@ else
 			if [ "$( cat $ROOT/$dir/CMD )" == "$1" ]
 			then
 				shift
-				echo -e "--==] \t amc `cat $ROOT/$dir/CMD` \t [==--"
+				echo -e "--==] \t mca `cat $ROOT/$dir/CMD` \t [==--"
 				echo
 				bash $ROOT/$dir/do.sh $*
 			fi
