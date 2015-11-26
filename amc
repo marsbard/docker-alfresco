@@ -24,13 +24,16 @@ then
 	echo
 elif [ "$1" == "edit" ]
 then
-  for dir in $dirs
+  for adir in $dirs
 	do
 		if [ -f $ROOT/$dir/CMD -a "$(cat $ROOT/$dir/CMD)" == $2 ]
 		then
-			if [ -n $2 ]
+			echo \$1=$1 \$2=$2 \$3=$3
+			set -x
+			dir=$(echo $adir )
+			if [ -n $3 ]
 			then
-				${EDITOR:-vi} $ROOT/$dir/$2
+				${EDITOR:-vi} $ROOT/$dir/$3
 			else
 	    	${EDITOR:-vi} $ROOT/$dir/*
 			fi
