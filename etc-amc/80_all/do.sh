@@ -1,6 +1,5 @@
 set -e
-./amc getdeps
 ./amc pull
-./amc buildimages
+./amc setup
 ./amc build
-./amc upq
+./amc up

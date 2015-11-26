@@ -1,3 +1,14 @@
+
+
+echo Getting alfresco dependencies
+
+for dir in alfresco share solr
+do
+	echo Running $dir/get
+  $dir/get.sh
+done
+
+
 echo Pulling docker images
 
 for image in \

@@ -33,7 +33,6 @@ then
 			if [ -f $ROOT/$dir/CMD -a "$(cat $ROOT/$dir/CMD)" == $2 ]
 			then
 				echo
-				echo
 				echo "amc $(cat $ROOT/$dir/CMD)"
 				echo
 				cat $ROOT/$dir/HELP
