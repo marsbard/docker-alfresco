@@ -23,7 +23,8 @@ alfresco:
   ports:
     - "8081:8080"
   volumes: 
-    - /data/alfresco/repo:/data
+    - /data/alfresco/repo/data:/data
+    - /data/alfresco/repo/logs:/logs
   dns: <%SKYDNS%>
 share:
   build: share
