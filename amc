@@ -28,7 +28,12 @@ then
 	do
 		if [ -f $ROOT/$dir/CMD -a "$(cat $ROOT/$dir/CMD)" == $2 ]
 		then
-	    ${EDITOR:-vi} $ROOT/$dir/*
+			if [ -n $2 ]
+			then
+				${EDITOR:-vi} $ROOT/$dir/$2
+			else
+	    	${EDITOR:-vi} $ROOT/$dir/*
+			fi
 		fi
 	done
 elif [ "$1" == "help" ]
