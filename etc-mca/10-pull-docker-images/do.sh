@@ -1,4 +1,8 @@
 
+echo Getting crowdr
+curl -s https://raw.githubusercontent.com/polonskiy/crowdr/master/crowdr > scripts/crowdr
+chmod +x scripts/crowdr
+#curl -s https://raw.githubusercontent.com/polonskiy/crowdr/master/completion > /etc/bash_completion.d/crowdr
 
 echo Getting alfresco dependencies
 

@@ -26,6 +26,8 @@ VOLUME /content
 
 VOLUME /config
 
+RUN mkdir /logs
+VOLUME /logs
 
 COPY files/start.sh /
 RUN chmod +x /start.sh
