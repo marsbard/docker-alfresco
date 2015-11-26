@@ -1,7 +1,7 @@
 
-./amc stop 2>&1 > /dev/null
+./mca stop 2>&1 > /dev/null
 
-./amc clean 2>&1 > /dev/null
+./mca clean 2>&1 > /dev/null
 
 echo --- destroying images ---
 

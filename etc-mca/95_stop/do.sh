@@ -1,10 +1,10 @@
-if [ -f /tmp/amc-pid ]
+if [ -f /tmp/mca-pid ]
 then
 
-	PID=$( cat /tmp/amc-pid)
+	PID=$( cat /tmp/mca-pid)
 	echo Killing pid $PID
 	kill $PID
-	rm /tmp/amc-pid
+	rm /tmp/mca-pid
 fi
 
 echo Stopping docker images related to alfresco

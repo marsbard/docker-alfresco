@@ -1,7 +1,7 @@
 set -me
-./amc setup
+./mca setup
 scripts/run-skydock.sh
 sleep 3
 docker-compose -p alfresco up &
-echo $! > /tmp/amc-pid
+echo $! > /tmp/mca-pid
 fg
