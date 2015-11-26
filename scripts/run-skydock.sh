@@ -30,4 +30,3 @@ then
 fi
 
 
-#cat docker-compose.yml.tmpl | sed "s/<%SKYDNS%>/$BRIDGE_IP/" > docker-compose.yml

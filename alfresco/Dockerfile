@@ -6,6 +6,7 @@ COPY files/tmp/alfresco.war /tomcat/webapps
 COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 COPY files/alfresco-global.properties /tomcat/shared/classes/alfresco-global.properties
+COPY files/tomcat-users.xml /tomcat/conf/tomcat-users.xml
 
 COPY files/log4j.properties /tomcat/shared/classes/log4j.properties
 
