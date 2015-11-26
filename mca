@@ -22,7 +22,7 @@ then
 		echo  "mca `cat $ROOT/$dir/CMD` - `cat $ROOT/$dir/INFO`"
 	done
 	echo
-	echo "For more help on a command you may try 'amd help <command>'"
+	echo "For more help on a command you may try 'mca help <command>'"
 	echo
 elif [ "$1" == "edit" ]
 then
