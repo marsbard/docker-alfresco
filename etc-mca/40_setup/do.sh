@@ -15,6 +15,8 @@ then
 	exit 1
 fi
 
+echo BRIDGE_IP is $BRIDGE_IP
+
 if [ -f docker-compose.yml ]
 then
   chmod u+w docker-compose.yml

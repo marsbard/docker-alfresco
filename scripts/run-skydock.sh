@@ -4,14 +4,19 @@ cd "`dirname $0`"
 
 if [ "$1" = "stop" ]
 then
-
 	docker stop skydock
-	docker rm skydock
-
 	docker stop skydns
-	docker rm skydns
 
 	exit
+fi
+
+if docker ps -a | grep skydns 2>&1 > /dev/null
+then
+	if ! docker ps | grep skydns 2>&1 > /dev/null
+	then
+		docker rm skydock
+		docker rm skydns
+  fi
 fi
 
 if ! docker ps | grep skydns 2>&1 > /dev/null
