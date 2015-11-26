@@ -58,7 +58,7 @@ else
 			if [ "$( cat $ROOT/$dir/CMD )" == "$1" ]
 			then
 				shift
-				echo "..--==] amc `cat $ROOT/$dir/CMD` [==--.."
+				echo -e "--==] \t amc `cat $ROOT/$dir/CMD` \t [==--"
 				echo
 				bash $ROOT/$dir/do.sh $*
 			fi
