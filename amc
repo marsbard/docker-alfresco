@@ -29,7 +29,6 @@ then
 		if [ -f $ROOT/$dir/CMD -a "$(cat $ROOT/$dir/CMD)" == $2 ]
 		then
 			echo \$1=$1 \$2=$2 \$3=$3
-			set -x
 			dir=$(echo $adir )
 			if [ -n $3 ]
 			then
