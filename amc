@@ -22,6 +22,15 @@ then
 		echo  "amc `cat $ROOT/$dir/CMD` - `cat $ROOT/$dir/INFO`"
 	done
 	echo
+elif [ "$1" == "edit" ]
+then
+  for dir in $dirs
+	do
+		if [ -f $ROOT/$dir/CMD -a "$(cat $ROOT/$dir/CMD)" == $2 ]
+		then
+	    ${EDITOR:-vi} $ROOT/$dir/*
+		fi
+	done
 elif [ "$1" == "help" ]
 then
 	if [ -z "$2" ]
