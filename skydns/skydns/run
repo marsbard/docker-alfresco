@@ -2,4 +2,4 @@
 
 cd /go/src/github.com/skynetservices/skydns
 
-./skydns -discover
+./skydns -discover 2>&1

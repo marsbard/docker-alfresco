@@ -1,8 +1,6 @@
 FROM marsbard/runit
 
-RUN /apt-select/apt-select.py -p -t 5
-RUN mv /sources.list /etc/apt
-RUN apt-get update 
+RUN /nearest-mirror.sh
 
 RUN /install git
 RUN /install wget
@@ -28,13 +26,21 @@ RUN wget https://github.com/coreos/etcd/releases/download/v2.2.2/etcd-v2.2.2-lin
 WORKDIR /
 RUN tar xzvf /tmp/etcd-v2.2.2-linux-amd64.tar.gz
 
-RUN mkdir -p /etc/sv/{skydns,etcd}
+RUN mkdir -p /etc/service/etcd/log
+RUN mkdir -p /etc/service/skydns/log
+RUN mkdir -p /log/etcd /log/skydns
 
-COPY skydns/run /etc/sv/skydns/run
-RUN chmod +x /etc/sv/skydns/run
+COPY skydns/run /etc/service/skydns/run
+RUN chmod +x /etc/service/skydns/run
 
-COPY etcd/run /etc/sv/etcd/run
-RUN chmod +x /etc/sv/etcd/run
+COPY skydns/log /etc/service/skydns/log/run
+RUN chmod +x /etc/service/skydns/log/run
+
+COPY etcd/run /etc/service/etcd/run
+RUN chmod +x /etc/service/etcd/run
+
+COPY etcd/log /etc/service/etcd/log/run
+RUN chmod +x /etc/service/etcd/log/run
 
 WORKDIR /
 

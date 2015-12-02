@@ -4,6 +4,9 @@ RUN touch /etc/inittab
 
 RUN /install runit
 
-ENTRYPOINT ["/usr/sbin/runsvdir-start"]
+COPY runit.sh /
+RUN chmod +x /runit.sh
+
+ENTRYPOINT ["/runit.sh"]
 
 

@@ -1,7 +1,6 @@
 FROM marsbard/tomcat
 
-RUN /apt-select/apt-select.py -p -t 5
-RUN mv /sources.list /etc/apt
+RUN /nearest-mirror.sh
 
 # http://serverfault.com/a/634227
 # See: http://fcorti.com/2014/10/13/how-to-install-alfresco-5-0-ubuntu-14-04-lts/

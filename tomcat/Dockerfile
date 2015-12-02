@@ -4,14 +4,15 @@
 
 FROM marsbard/base
 
-RUN /apt-select/apt-select.py -p -t 5
-RUN mv /sources.list /etc/apt
+RUN /nearest-mirror.sh
 
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get install -yq --force-yes --no-install-recommends oracle-java8-installer  \
+  add-apt-repository -y ppa:webupd8team/java
+
+RUN apt-get update
+
+RUN apt-get install -yq --force-yes --no-install-recommends oracle-java8-installer  \
 	  unzip python-pip \
     curl pwgen wget ca-certificates && \
   rm -rf /var/lib/apt/lists/* && \

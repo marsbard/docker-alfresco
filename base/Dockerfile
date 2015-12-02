@@ -17,6 +17,10 @@ RUN /install 'python(3?)-bs4$'
 RUN /apt-select/apt-select.py -p -t 5
 RUN mv /sources.list /etc/apt
 
+COPY nearest-mirror.sh /
+RUN chmod +x /nearest-mirror.sh
+RUN /nearest-mirror.sh
+
 RUN apt-get update
 
 RUN /install wget 

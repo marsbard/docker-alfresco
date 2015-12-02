@@ -1,7 +1,6 @@
 FROM marsbard/base
 
-RUN /apt-select/apt-select.py -p -t 5
-RUN mv /sources.list /etc/apt
+RUN /nearest-mirror.sh
 
 RUN apt-get update
 RUN apt-get install -y curl

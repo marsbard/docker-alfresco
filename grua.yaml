@@ -1,15 +1,15 @@
 global:
-  project: alfresco
+  project: alf
 base:
   build: base
   tag: marsbard/base
   run: false
   before: 
-    - supervisor
+    - runit
     - tomcat
-supervisor:
-  build: supervisor
-  tag: marsbard/supervisor
+runit:
+  build: runit
+  tag: marsbard/runit
   run: false
   before: 
     - skydns
@@ -25,6 +25,14 @@ haveged:
     - alfresco
     - share
     - solr
+skydns:
+  build: skydns
+  tag: marsbard/skydns
+  ports:
+    - "153:53/tcp"
+    - "153:53/udp"
+  before:
+    - haveged
 #skydns:
 #  tag: codekoala/skydns2
 #  build: git:https://github.com/codekoala/docker-skydns2.git
