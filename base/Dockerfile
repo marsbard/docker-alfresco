@@ -1,5 +1,7 @@
 FROM ubuntu:trusty
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update -y 
 
 RUN echo apt-get -y --no-install-recommends install \$1 > /install

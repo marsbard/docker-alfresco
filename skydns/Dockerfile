@@ -1,4 +1,4 @@
-FROM marsbard/supervisor
+FROM marsbard/runit
 
 RUN /apt-select/apt-select.py -p -t 5
 RUN mv /sources.list /etc/apt
@@ -21,17 +21,21 @@ RUN go version
 RUN go get github.com/skynetservices/skydns 
 
 
-
-RUN wget https://github.com/coreos/etcd/releases/download/v2.2.2/etcd-v2.2.2-linux-amd64.tar.gz -O /tmp/etcd-v2.2.2-linux-amd64.tar.gz
-RUN tar xzvf /tmp/etcd-v2.2.2-linux-amd64.tar.gz
-COPY etcd.sv.conf /etc/supervisor/conf.d
-COPY run-etcd.sh /
-RUN chmod +x /run-etcd.sh
-
-
 WORKDIR /go/src/github.com/skynetservices/skydns
-
 RUN go build -v
 
-CMD ./skydns -discover
+RUN wget https://github.com/coreos/etcd/releases/download/v2.2.2/etcd-v2.2.2-linux-amd64.tar.gz -O /tmp/etcd-v2.2.2-linux-amd64.tar.gz
+WORKDIR /
+RUN tar xzvf /tmp/etcd-v2.2.2-linux-amd64.tar.gz
 
+RUN mkdir -p /etc/sv/{skydns,etcd}
+
+COPY skydns/run /etc/sv/skydns/run
+RUN chmod +x /etc/sv/skydns/run
+
+COPY etcd/run /etc/sv/etcd/run
+RUN chmod +x /etc/sv/etcd/run
+
+WORKDIR /
+
+#CMD [ "/runit.sh" ]

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /etcd-v2.2.2-linux-amd64
+./etcd
