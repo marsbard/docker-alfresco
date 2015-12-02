@@ -3,3 +3,5 @@
 *.jar
 */files/tmp/*
 docker-compose.yml
+_grua_codekoala_skydns2
+tmp

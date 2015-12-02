@@ -1,3 +1,15 @@
+global:
+  project: alfresco
+base:
+  build: base
+  tag: marsbard/base
+  run: false
+  before: 
+    - tomcat
+tomcat:
+  build: tomcat
+  tag: marsbard/tomcat
+  run: false
 haveged:
   image: harbur/haveged:1.7c-1
   options:
@@ -6,30 +18,41 @@ haveged:
     - alfresco
     - share
     - solr
-tomcat:
-  build: tomcat
-  tag: marsbard/tomcat
-  run: false
-skydns:
-  image: crosbymichael/skydns
-  name: skydns
-  ports:
-    - "172.17.0.1:53:53/udp"
-  command: "-nameserver 8.8.8.8:53 -domain docker"
-  before: 
-    - haveged
-skydock:
-  image: crosbymichael/skydock
-  name: skydock
-  volumes: 
-    - /var/run/docker.sock:/docker.sock
-  command: "-ttl 30 -environment ns -s /docker.sock -domain docker"
-  after: 
-    - skydns
-  before:
-    - alfresco
-    - share
-    - solr
+#skydns:
+#  tag: codekoala/skydns2
+#  build: git:https://github.com/codekoala/docker-skydns2.git
+#  name: skydns
+#  ports:
+#    - "<% GRUA BRIDGE_IP %>:53:53/udp"
+#  command: "-nameserver 8.8.8.8:53 -domain docker"
+#  upwhen:
+#    logmsg: "Initializing new cluster"
+#    sleep: 5
+#    timeout: 10
+#  before: 
+#    - haveged
+#  options:
+#    - "--expose=8080"
+#skydock:
+#  options:
+#    - "--expose=8080"
+#  image: crosbymichael/skydock
+#  #name: skydock
+#  volumes: 
+#    - /var/run/docker.sock:/docker.sock
+#  #command: "-ttl 30 -environment ns -s /docker.sock -workers=2 -domain docker -skydns=http://<% GRUA BRIDGE_IP %>:8080/skydns/services"
+#  command: "-ttl 30 -environment ns -s /docker.sock -workers=2 -domain docker "
+#  link: 
+#    - skydns
+#  options:
+#    - "--skydock=<% ENV PIDDY  %>"
+#  dns: <% GRUA BRIDGE_IP %>
+#  after: 
+#    - skydns
+#  before:
+#    - alfresco
+#    - share
+#    - solr
 alfresco:
   build: alfresco
   options:
@@ -41,7 +64,7 @@ alfresco:
   volumes: 
     - /data/alfresco/repo/data:/data
     - /data/alfresco/repo/logs:/logs
-  dns: 172.17.0.1
+  dns: <% GRUA BRIDGE_IP %>
   hostname: alfresco
 share:
   build: share
@@ -51,7 +74,7 @@ share:
     - "8080:8080"
   volumes: 
     - /data/alfresco/share:/data
-  dns: 172.17.0.1
+  dns: <% GRUA BRIDGE_IP %>
   hostname: share
   after:
     - alfresco
@@ -64,7 +87,7 @@ solr:
     - /data/alfresco/solr/data:/data
     - /data/alfresco/solr/content:/content
     - /data/alfresco/solr/logs:/logs
-  dns: 172.17.0.1
+  dns: <% GRUA BRIDGE_IP %>
 mysql:
   hostname: mysql
   image: "mysql:5.6"
@@ -75,9 +98,12 @@ mysql:
     MYSQL_USER: alfresco
     MYSQL_PASSWORD: alfresco
     MYSQL_ROOT_PASSWORD: alfresco
-  dns: 172.17.0.1
+  dns: <% GRUA BRIDGE_IP %>
   before:
     - alfresco
+  upwhen:
+    logmsg: "mysqld: ready for connections"
+    sleep: 2
 postfix:
   hostname: postfix
   image: "catatnight/postfix"
@@ -86,4 +112,4 @@ postfix:
   environment: 
     maildomain: "alfresco.local"
     smtp_user: "mailuser:password"
-  dns: 172.17.0.1
+  dns: <% GRUA BRIDGE_IP %>

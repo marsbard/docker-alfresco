@@ -2,12 +2,10 @@
 # docker build -t="dockerfile/ubuntu" github.com/dockerfile/ubuntu
 # also from https://github.com/tutumcloud/tomcat/blob/master/8.0/Dockerfile
 
-FROM ubuntu-upstart:trusty
+FROM marsbard/base
 
-RUN apt-get remove -y netcat-openbsd || true
-RUN apt-get update && apt-get install -y --no-install-recommends  \
-	software-properties-common telnet netcat-traditional curl elinks dnsutils
-
+RUN /apt-select/apt-select.py -p -t 5
+RUN mv /sources.list /etc/apt
 
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
