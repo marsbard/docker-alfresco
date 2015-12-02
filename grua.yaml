@@ -5,7 +5,14 @@ base:
   tag: marsbard/base
   run: false
   before: 
+    - supervisor
     - tomcat
+supervisor:
+  build: supervisor
+  tag: marsbard/supervisor
+  run: false
+  before: 
+    - skydns
 tomcat:
   build: tomcat
   tag: marsbard/tomcat
