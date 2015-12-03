@@ -1,6 +1,0 @@
-Remove all images related to the composition
-
-First 'stop' and 'clean' will be run
-
-If you supply the "-a" argument then  the image 'marsbard/tomcat' will be removed 
-and so you will need to run "amc buildimages" once more to run the composition again.
