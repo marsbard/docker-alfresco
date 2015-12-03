@@ -4,21 +4,13 @@
 
 FROM marsbard/base
 
-RUN /nearest-mirror.sh
 
-RUN \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java
-
-RUN apt-get update
-
-RUN apt-get install -yq --force-yes --no-install-recommends oracle-java8-installer  \
-	  unzip python-pip \
-    curl pwgen wget ca-certificates && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/oracle-jdk8-installer
-
-RUN pip install consulate
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+	apt-get update && \
+	apt-get install -y oracle-java8-installer unzip python-pip curl pwgen && \
+	rm -rf /var/lib/apt/lists/* && \
+	rm -rf /var/cache/oracle-jdk8-installer
 
 
 # Define commonly used JAVA_HOME variable

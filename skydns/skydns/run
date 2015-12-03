@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd /go/src/github.com/skynetservices/skydns
-
-./skydns -discover 2>&1

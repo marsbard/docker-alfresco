@@ -1,7 +1,5 @@
 FROM marsbard/base
 
-RUN /nearest-mirror.sh
-
 RUN apt-get update
 RUN apt-get install -y curl
 
