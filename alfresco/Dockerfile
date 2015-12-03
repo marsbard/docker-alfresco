@@ -16,6 +16,8 @@ COPY files/tomcat-users.xml /tomcat/conf/tomcat-users.xml
 
 COPY files/log4j.properties /tomcat/webapps/alfresco/WEB-INF/classes/log4j.properties
 
+COPY files/java.security /usr/lib/jvm/java-8-oracle/jre/lib/security/java.security
+
 ADD files/tmp/keystore /keystore
 
 RUN mkdir /tomcat/lib -p
