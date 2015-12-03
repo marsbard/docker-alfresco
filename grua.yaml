@@ -12,7 +12,7 @@ tomcat:
   run: false
 dnsdock:
   image: tonistiigi/dnsdock
-  command: "-domain=docker -nameserver=8.8.8.8:53 -verbose=true"
+  command: "-domain=docker -nameserver=8.8.8.8:53 -verbose=true -environment=ns"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
   ports:
@@ -24,6 +24,7 @@ dnsdock:
     - mysql
 alfresco:
   build: alfresco
+  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=2021"
     - "--expose=7070"
@@ -36,6 +37,7 @@ alfresco:
   hostname: alfresco
 share:
   build: share
+  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=8080"
   ports:
@@ -50,14 +52,14 @@ share:
 solr:
   build: solr
   hostname: solr
-  environment:
-    HOSTS_alfresco: <% INSPECT alfresco {{ .NetworkSettings.IPAddress }} %>
+  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
   volumes:
     - /data/alfresco/solr/data:/data
     - /data/alfresco/solr/content:/content
     - /data/alfresco/solr/logs:/logs
 mysql:
   hostname: mysql
+  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
   build: mysql
   volumes: 
     - /data/alfresco/mysql:/var/lib/mysql
@@ -74,9 +76,10 @@ mysql:
     sleep: 2
 postfix:
   hostname: postfix
+  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
   image: "catatnight/postfix"
-  ports:
-    - "25:25"
+  options:
+    - "--expose 25"
   environment: 
     maildomain: "alfresco.local"
     smtp_user: "mailuser:password"
