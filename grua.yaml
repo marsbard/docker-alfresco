@@ -60,7 +60,7 @@ solr:
 mysql:
   hostname: mysql
   dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
-  build: mysql
+  image: mysql:5.6
   volumes: 
     - /data/alfresco/mysql:/var/lib/mysql
   environment:
@@ -79,7 +79,7 @@ postfix:
   dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
   image: "catatnight/postfix"
   options:
-    - "--expose 25"
+    - "--expose=25"
   environment: 
     maildomain: "alfresco.local"
     smtp_user: "mailuser:password"
