@@ -17,6 +17,10 @@ dnsdock:
     - /var/run/docker.sock:/var/run/docker.sock
   ports:
     - <% GRUA BRIDGE_IP %>:53:53/udp
+    - <% GRUA BRIDGE_IP %>:53:53/tcp
+  options:
+    - "--expose 53"
+    - "--expose 53/udp"
   before: 
     - alfresco
     - solr
