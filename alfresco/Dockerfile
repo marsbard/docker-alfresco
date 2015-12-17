@@ -18,6 +18,8 @@ COPY files/log4j.properties /tomcat/webapps/alfresco/WEB-INF/classes/log4j.prope
 
 COPY files/java.security /usr/lib/jvm/java-8-oracle/jre/lib/security/java.security
 
+COPY files/nsswitch.conf /etc/nsswitch.conf
+
 ADD files/tmp/keystore /keystore
 
 RUN mkdir /tomcat/lib -p

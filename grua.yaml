@@ -1,5 +1,6 @@
 global:
   project: alf
+  volumepath: /var/lib/grua/volumes
 base:
   build: base
   tag: marsbard/base
@@ -10,44 +11,98 @@ tomcat:
   build: tomcat
   tag: marsbard/tomcat
   run: false
-dnsdock:
-  image: tonistiigi/dnsdock
-  command: "-domain=docker -nameserver=8.8.8.8:53 -verbose=true -environment=ns"
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-  ports:
-    - <% GRUA BRIDGE_IP %>:53:53/udp
-    - <% GRUA BRIDGE_IP %>:53:53/tcp
+########################################################################################
+#dnsdock:
+#  image: tonistiigi/dnsdock
+#  command: "-domain=docker -dns=:53 -nameserver=8.8.8.8:53 -verbose=true -environment=ns"
+#  volumes:
+#    - /var/run/docker.sock:/var/run/docker.sock
+#  ports:
+#    - <% GRUA BRIDGE_IP %>:53:53
+#    - <% GRUA BRIDGE_IP %>:53:53/udp
+##  options:
+##    - "--expose=53"
+##    - "--expose=53/udp"
+#  before: 
+#    - postfix
+#    - alfresco
+#    - solr
+#    - share
+#    - mysql
+consul:
+  image: gliderlabs/consul-server
   options:
-    - "--expose 53"
-    - "--expose 53/udp"
+    - "--expose=8300"
+    - "--expose=8500"
+    - "--expose=5353"
+    - "--net=host"
+  ports:
+    - 8300:8300
+    - 8600:5353
+    - 8500:8500
+  volumes:
+    - consul/config:/config
+    - consul/data:/data
+  command: "-data-dir=/data -bootstrap-expect 1"
+registrator:
+  image: gliderlabs/registrator:latest
+  options:
+    - "--net=host"
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock
   before: 
+    - postfix
     - alfresco
     - solr
     - share
     - mysql
+  after:
+    - consul
+  command: "-internal consul://<% INSPECT consul {{ .NetworkSettings.IPAddress }} %>:8500"
+#etcd:
+#  image: quay.io/coreos/etcd:v2.0.3
+#  command: "-name etcd0 
+#    -advertise-client-urls http://<% GRUA BRIDGE_IP %>:2379,http://<% GRUA BRIDGE_IP %>:4001
+#    -initial-advertise-peer-urls http://<% GRUA BRIDGE_IP %>:2380 
+#    -listen-peer-urls http://0.0.0.0:2380 
+#    -initial-cluster-token etcd-cluster-1 
+#    -initial-cluster etcd0=http://<% GRUA BRIDGE_IP %>:2380 
+#    -initial-cluster-state new"
+#  before: 
+#    - postfix
+#    - alfresco
+#    - solr
+#    - share
+#    - mysql
+#  after:
+#    - consul
+#  link:
+#    - consul
 alfresco:
   build: alfresco
-  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  dns: <% GRUA BRIDGE_IP %>
   options:
     - "--expose=2021"
     - "--expose=7070"
     - "--expose=8080"
+      #- "--privileged" # TEMP ONLY for debugging with strace
   ports:
     - "8081:8080"
   volumes: 
-    - /data/alfresco/repo/data:/data
-    - /data/alfresco/repo/logs:/logs
+    - alfresco/repo/data:/data
+    - alfresco/repo/logs:/logs
   hostname: alfresco
 share:
   build: share
-  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  dns: <% GRUA BRIDGE_IP %>
   options:
     - "--expose=8080"
   ports:
     - "8080:8080"
   volumes: 
-    - /data/alfresco/share:/data
+    - alfresco/share:/data
   hostname: share
   after:
     - alfresco
@@ -56,25 +111,31 @@ share:
 solr:
   build: solr
   hostname: solr
-  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  options:
+    - "--expose=8080"
+  #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  dns: <% GRUA BRIDGE_IP %>
   volumes:
-    - /data/alfresco/solr/data:/data
-    - /data/alfresco/solr/content:/content
-    - /data/alfresco/solr/logs:/logs
+    - alfresco/solr/data:/data
+    - alfresco/solr/content:/content
+    - alfresco/solr/logs:/logs
 mysql:
   hostname: mysql
-  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  dns: <% GRUA BRIDGE_IP %>
   image: mysql:5.6
   options:
     - "--expose=3306"
   volumes: 
-    - /data/alfresco/mysql:/var/lib/mysql
+    - alfresco/mysql:/var/lib/mysql
   environment:
     #ETCD_HOST: <% INSPECT nameserv {{ .NetworkSettings.IPAddress }} %>
     MYSQL_DATABASE: alfresco
     MYSQL_USER: alfresco
     MYSQL_PASSWORD: alfresco
     MYSQL_ROOT_PASSWORD: alfresco
+  after:
+    - consul
   before:
     - alfresco
   upwhen:
@@ -82,15 +143,14 @@ mysql:
     sleep: 2
 postfix:
   hostname: postfix
-  dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
+  dns: <% GRUA BRIDGE_IP %>
   image: "catatnight/postfix"
   options:
     - "--expose=25"
   environment: 
     maildomain: "alfresco.local"
     smtp_user: "mailuser:password"
-  after:
-    - dnsdock
 haveged:
   image: harbur/haveged:1.7c-1
   options:
@@ -99,3 +159,10 @@ haveged:
     - alfresco
     - share
     - solr
+dockerui:
+  # docker run -d -p 9000:9000 --privileged -v /var/run/docker.sock:/var/run/docker.sock dockerui/dockerui
+  image: dockerui/dockerui
+  ports:
+    - "9000:9000"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
