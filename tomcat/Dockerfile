@@ -30,12 +30,9 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
 RUN rm -fr /tomcat/webapps/*
 
 
-#COPY consul-bootstrap.sh /
-#RUN chmod +x /consul-bootstrap.sh
 
 EXPOSE 8080
 
 ENV CATALINA_HOME /tomcat
-#CMD ["/consul-bootstrap.sh", "/tomcat/bin/catalina.sh",  "run"]
 
 CMD ["/tomcat/bin/catalina.sh", "run"]

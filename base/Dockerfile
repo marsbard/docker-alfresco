@@ -10,5 +10,3 @@ RUN apt-get update
 RUN /install wget curl telnet dnsutils software-properties-common netcat-traditional git \
 	ca-certificates
 
-COPY files/register-ns.sh /
-RUN chmod +x /register-ns.sh
