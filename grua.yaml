@@ -19,11 +19,11 @@ consul:
   options:
     - "--expose=8300"
     - "--expose=8500"
-    - "--expose=8600"
+    - "--expose=53"
   ports:
     - 8300:8300
     - 8500:8500
-    - 8600:8600
+    - "53:53"
   volumes:
     - consul/config:/config
     - consul/data:/data
@@ -45,7 +45,7 @@ registrator:
   command: "-internal consul://consul:8500"
 alfresco:
   build: alfresco
-  dns: <% GRUA BRIDGE_IP %>
+  dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=2021"
     - "--expose=7070"
@@ -59,7 +59,7 @@ alfresco:
   hostname: alfresco
 share:
   build: share
-  dns: <% GRUA BRIDGE_IP %>
+  dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=8080"
   ports:
@@ -77,14 +77,14 @@ solr:
   options:
     - "--expose=8080"
   #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
-  dns: <% GRUA BRIDGE_IP %>
+  dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
     - alfresco/solr/data:/data
     - alfresco/solr/content:/content
     - alfresco/solr/logs:/logs
 mysql:
   hostname: mysql
-  dns: <% GRUA BRIDGE_IP %>
+  dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   image: mysql:5.6
   options:
     - "--expose=3306"
@@ -104,7 +104,7 @@ mysql:
     sleep: 2
 postfix:
   hostname: postfix
-  dns: <% GRUA BRIDGE_IP %>
+  dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   image: "catatnight/postfix"
   options:
     - "--expose=25"
