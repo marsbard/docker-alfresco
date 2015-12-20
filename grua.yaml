@@ -11,9 +11,13 @@ tomcat:
   build: tomcat
   tag: marsbard/tomcat
   run: false
+consulimg:
+  build: consul
+  tag: marsbard/consul
+  run: false
 ########################################################################################
 consul:
-  image: gliderlabs/consul-server
+  image: marsbard/consul
   upwhen: 
     logmsg: "consul: New leader elected: consul"
   options:
