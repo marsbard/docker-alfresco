@@ -179,7 +179,6 @@
   </welcome-file-list>
 
 
-<!--
     <security-constraint>
         <web-resource-collection>
             <url-pattern>/*</url-pattern>
@@ -200,5 +199,4 @@
     <security-role>
        <role-name>repository</role-name>
     </security-role>
--->
 </web-app>

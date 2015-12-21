@@ -45,7 +45,6 @@ registrator:
   command: "-internal consul://consul:8500"
 alfresco:
   build: alfresco
-  hostname: alfresco-8080.service.consul
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=2021"
@@ -55,6 +54,12 @@ alfresco:
     - "--privileged" # TEMP ONLY for debugging with strace
   ports:
     - "8081:8080"
+  upwhen:
+    logmsg: "INFO: Server startup in "
+    timeout: 120
+  before: 
+    - solr
+    - share
   volumes: 
     - alfresco/repo/data:/data
     - alfresco/repo/logs:/logs
@@ -71,18 +76,23 @@ share:
   hostname: share.service.consul
   after:
     - alfresco
+  upwhen:
+    logmsg: "INFO: Server startup in "
+    timeout: 60
   before:
     - solr
 solr:
   build: solr
-  hostname: solr.service.consul
   options:
-    - "--expose=8080"
+    - "--expose=8443"
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
     - alfresco/solr/data:/data
     - alfresco/solr/content:/content
     - alfresco/solr/logs:/logs
+  upwhen:
+    logmsg: "INFO: Server startup in "
+    timeout: 60
 mysql:
   hostname: mysql.service.consul
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
