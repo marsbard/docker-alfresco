@@ -86,6 +86,8 @@ solr:
   build: solr
   options:
     - "--expose=8443"
+  ports:
+    - "8443:8443"
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
     - alfresco/solr/data:/data
