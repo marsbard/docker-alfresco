@@ -50,6 +50,7 @@ alfresco:
     - "--expose=2021"
     - "--expose=7070"
     - "--expose=8080"
+    - "--expose=8443"
     - "--add-host=alfresco.service.consul:127.0.0.1"
     - "--privileged" # TEMP ONLY for debugging with strace
   ports:
@@ -136,3 +137,5 @@ dockerui:
     - "9000:9000"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
+libreoffice:
+  image: jamotion/odoo-soffice 
