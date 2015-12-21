@@ -45,7 +45,7 @@ registrator:
   command: "-internal consul://consul:8500"
 alfresco:
   build: alfresco
-  hostname: alfresco
+  hostname: alfresco-8080.service.consul
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=2021"
@@ -78,7 +78,6 @@ solr:
   hostname: solr.service.consul
   options:
     - "--expose=8080"
-  #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
     - alfresco/solr/data:/data
