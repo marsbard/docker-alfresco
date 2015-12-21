@@ -2,7 +2,7 @@ FROM marsbard/tomcat
 
 # http://serverfault.com/a/634227
 # See: http://fcorti.com/2014/10/13/how-to-install-alfresco-5-0-ubuntu-14-04-lts/
-RUN apt-get update && apt-get -y install libjpeg62 libgif4 libart-2.0-2 libfreetype6 gsfonts libfontconfig1
+RUN apt-get update && apt-get -y install libjpeg62 libgif4 libart-2.0-2 libfreetype6 gsfonts libfontconfig1 strace
 RUN wget -P /tmp/ http://archive.canonical.com/ubuntu/pool/partner/s/swftools/swftools_0.9.0-0ubuntu2_amd64.deb
 RUN dpkg -i /tmp/swftools_0.9.0-0ubuntu2_amd64.deb
 

@@ -45,12 +45,14 @@ registrator:
   command: "-internal consul://consul:8500"
 alfresco:
   build: alfresco
+  hostname: alfresco
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=2021"
     - "--expose=7070"
     - "--expose=8080"
-      #- "--privileged" # TEMP ONLY for debugging with strace
+    - "--add-host=alfresco.service.consul:127.0.0.1"
+    - "--privileged" # TEMP ONLY for debugging with strace
   ports:
     - "8081:8080"
   volumes: 
@@ -66,14 +68,14 @@ share:
     - "8080:8080"
   volumes: 
     - alfresco/share:/data
-  hostname: share
+  hostname: share.service.consul
   after:
     - alfresco
   before:
     - solr
 solr:
   build: solr
-  hostname: solr
+  hostname: solr.service.consul
   options:
     - "--expose=8080"
   #dns: <% INSPECT dnsdock {{ .NetworkSettings.IPAddress }} %>
@@ -83,7 +85,7 @@ solr:
     - alfresco/solr/content:/content
     - alfresco/solr/logs:/logs
 mysql:
-  hostname: mysql
+  hostname: mysql.service.consul
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   image: mysql:5.6
   options:
