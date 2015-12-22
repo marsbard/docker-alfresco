@@ -13,7 +13,7 @@ COPY files/solrcore-archive.properties /config/archive-SpacesStore/conf/solrcore
 COPY files/tmp/alfresco-solr4-config-ssl.zip /tmp
 
 
-COPY files/tomcat-users.xml /tomxat/conf/tomcat-users.xml
+COPY files/tomcat-users.xml /tomcat/conf/tomcat-users.xml
 COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 
