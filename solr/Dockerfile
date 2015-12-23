@@ -1,6 +1,6 @@
 FROM marsbard/tomcat
 
-COPY files/tmp/solr4.war /tomcat/webapps
+ADD https://artifacts.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-solr4/5.0.d/alfresco-solr4-5.0.d-ssl.war /tomcat/webapps/solr4.war
 
 COPY files/solr4.xml /tomcat/conf/Catalina/localhost/solr4.xml
 

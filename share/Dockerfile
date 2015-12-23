@@ -1,6 +1,7 @@
 FROM marsbard/tomcat
 
-COPY files/tmp/share.war /tomcat/webapps/share.war
+
+ADD https://artifacts.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/share/5.0.d/share-5.0.d.war /tomcat/webapps/share.war
 
 COPY files/share-config-custom.xml /tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml
 
