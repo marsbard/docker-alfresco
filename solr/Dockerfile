@@ -1,4 +1,4 @@
-FROM marsbard/tomcat
+FROM marsbard/alfbase
 
 ADD https://artifacts.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-solr4/5.0.d/alfresco-solr4-5.0.d-ssl.war /tomcat/webapps/solr4.war
 
@@ -17,8 +17,11 @@ COPY files/tomcat-users.xml /tomcat/conf/tomcat-users.xml
 COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 
+# the keystores were generated in the alfbase image, copy them into place
+COPY files/install-ssl.sh /
+RUN chmod +x /install-ssl.sh
+RUN /install-ssl.sh
 
-ADD files/tmp/keystore /keystore
 
 # would normally be in .../solr4
 VOLUME /data    

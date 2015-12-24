@@ -1,4 +1,4 @@
-FROM marsbard/tomcat
+FROM marsbard/alfbase
 
 ADD http://archive.canonical.com/ubuntu/pool/partner/s/swftools/swftools_0.9.0-0ubuntu2_amd64.deb /tmp/
 ADD https://artifacts.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco/5.0.d/alfresco-5.0.d.war /tomcat/webapps/alfresco.war
@@ -11,8 +11,6 @@ RUN apt-get update && apt-get -y install libjpeg62 libgif4 libart-2.0-2 libfreet
 RUN dpkg -i /tmp/swftools_0.9.0-0ubuntu2_amd64.deb
 RUN rm -rf /tmp/swftools_0.9.0-0ubuntu2_amd64.deb
 
-
-#COPY files/tmp/alfresco.war /tomcat/webapps
 RUN unzip /tomcat/webapps/alfresco.war -d /tomcat/webapps/alfresco
 COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
@@ -22,10 +20,6 @@ COPY files/tomcat-users.xml /tomcat/conf/tomcat-users.xml
 COPY files/log4j.properties /tomcat/webapps/alfresco/WEB-INF/classes/log4j.properties
 
 COPY files/java.security /usr/lib/jvm/java-8-oracle/jre/lib/security/java.security
-
-#COPY files/nsswitch.conf /etc/nsswitch.conf
-
-ADD files/tmp/keystore /keystore
 
 RUN mkdir /tomcat/lib -p
 RUN mkdir -p /tomcat/shared/lib

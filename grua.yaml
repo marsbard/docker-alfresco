@@ -11,6 +11,10 @@ tomcat:
   build: tomcat
   tag: marsbard/tomcat
   run: false
+alfbase:
+  build: alfbase
+  tag: marsbard/alfbase
+  run: false
 ########################################################################################
 consul:
   build: consul

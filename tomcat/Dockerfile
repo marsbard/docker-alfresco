@@ -35,4 +35,7 @@ EXPOSE 8080
 
 ENV CATALINA_HOME /tomcat
 
-CMD ["/tomcat/bin/catalina.sh", "run"]
+COPY files/start.sh /start.sh
+RUN chmod +x /start.sh
+
+CMD ["/start.sh", "/tomcat/bin/catalina.sh", "run"]
