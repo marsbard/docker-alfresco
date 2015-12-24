@@ -38,7 +38,7 @@ if [ -f "$CERTIFICATE_HOME/ssl.repo.client.keystore" ]; then rm "$CERTIFICATE_HO
 if [ -f "$CERTIFICATE_HOME/ssl.repo.client.truststore" ]; then rm "$CERTIFICATE_HOME/ssl.repo.client.truststore"; fi
 
 # Generate new self-signed certificates for the repository and solr
-"$JAVA_HOME/bin/keytool" -genkeypair -keyalg RSA -dname "$REPO_CERT_DNAME" -validity $CERTIFICATE_VALIDITY -alias ssl.repo -keypass ${KEYSTORE_PASSWORD} -keystore "$CERTIFICATE_HOME/ssl.keystore" -storetype JCEKS -storepass ${KEYSTORE_PASSWORD}
+"$JAVA_HOME/bin/keytool" -genkeypair -keyalg RSA -dname "$REPO_CERT_DNAME" -validity $CERTIFICATE_VALIDITY -alias ssl.repo -keypass ${KEYSTORE_PASSWORD} -keystore "$CERTIFICATE_HOME/ssl.keystore" -storetype JCEKS -storepass ${KEYSTORE_PASSWORD}A
 "$JAVA_HOME/bin/keytool" -exportcert -alias ssl.repo -file "$CERTIFICATE_HOME/ssl.repo.crt" -keystore "$CERTIFICATE_HOME/ssl.keystore" -storetype JCEKS -storepass ${KEYSTORE_PASSWORD}
 "$JAVA_HOME/bin/keytool" -genkeypair -keyalg RSA -dname "$SOLR_CLIENT_CERT_DNAME" -validity $CERTIFICATE_VALIDITY -alias ssl.repo.client -keypass ${KEYSTORE_PASSWORD} -keystore "$CERTIFICATE_HOME/ssl.repo.client.keystore" -storetype JCEKS -storepass ${KEYSTORE_PASSWORD}
 "$JAVA_HOME/bin/keytool" -exportcert -alias ssl.repo.client -file "$CERTIFICATE_HOME/ssl.repo.client.crt" -keystore "$CERTIFICATE_HOME/ssl.repo.client.keystore" -storetype JCEKS -storepass ${KEYSTORE_PASSWORD}

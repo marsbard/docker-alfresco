@@ -8,6 +8,6 @@ then
 	cp -rv /config/* /data
 fi
 
-
+/install-ssh.sh
 
 /tomcat/bin/catalina.sh run

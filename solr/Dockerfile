@@ -20,7 +20,8 @@ COPY files/catalina.properties /tomcat/conf/catalina.properties
 # the keystores were generated in the alfbase image, copy them into place
 COPY files/install-ssl.sh /
 RUN chmod +x /install-ssl.sh
-RUN /install-ssl.sh
+# we'll run it in start.sh instead because unpacking the config overwrites
+#RUN /install-ssl.sh
 
 
 # would normally be in .../solr4
