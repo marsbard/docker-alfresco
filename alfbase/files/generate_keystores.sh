@@ -1,4 +1,6 @@
 #! /bin/sh
+
+set -x 
 # modified from the alfresco version - marsbard 20151223
 
 cd "`dirname $0`"
@@ -7,6 +9,36 @@ cd "`dirname $0`"
 ( cat /dev/urandom | env LC_CTYPE=C tr -dc a-zA-Z0-9 | head -c 16; echo ) > /keystore-password
 
 KEYSTORE_PASSWORD=`cat /keystore-password`
+
+
+DNAME="/CN=Alfresco\ Repository/OU=Unknown/O=Alfresco\ Software\ Ltd./L=Maidenhead/ST=UK/C=GB"
+
+
+openssl genrsa -des3 -passout pass:${KEYSTORE_PASSWORD} -out /keystore/ca.key 1024
+
+openssl req -subj "$DNAME" -new -x509 -days 3650 -passin pass:${KEYSTORE_PASSWORD} -key /keystore/ca.key -out /keystore/ca.crt
+
+cat <<EOF > /keystore/ssl-keystore-passwords.properties
+aliases=ssl.alfresco.ca,ssl.repo.client
+# The ssl keystore password
+keystore.password=${KEYSTORE_PASSWORD}
+# The password protecting the ssl repository key
+ssl.repo.client.password=${KEYSTORE_PASSWORD}
+# The password protecting the ssl Alfresco CA key
+ssl.alfresco.ca.password=${KEYSTORE_PASSWORD}
+EOF
+
+cat /keystore/ssl-keystore-passwords.properties
+
+cat <<EOF > /keystore/ssl-truststore-passwords.properties
+aliases=alfresco.ca
+# The ssl truststore password
+keystore.password=${KEYSTORE_PASSWORD}
+# The password protecting the ssl Alfresco CA strust certificate
+alfresco.ca.password=${KEYSTORE_PASSWORD}
+
+
+EOF
 
 
 # Alfresco installation directory

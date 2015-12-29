@@ -4,15 +4,10 @@ do
 	mkdir -p /data/${x}/conf 
 done
 
-
-cp "/keystore/ssl.repo.client.keystore" "/data/workspace-SpacesStore/conf/ssl.repo.client.keystore"
-cp "/keystore/ssl.repo.client.truststore" "/data/workspace-SpacesStore/conf/ssl.repo.client.truststore"
-cp "/keystore/ssl.repo.client.keystore" "/data/archive-SpacesStore/conf/ssl.repo.client.keystore"
-cp "/keystore/ssl.repo.client.truststore" "/data/archive-SpacesStore/conf/ssl.repo.client.truststore"
-
-cp "/keystore/ssl.repo.client.keystore" "/data/templates/test/conf/ssl.repo.client.keystore"
-cp "/keystore/ssl.repo.client.truststore" "/data/templates/test/conf/ssl.repo.client.truststore"
-cp "/keystore/ssl.repo.client.keystore" "/data/templates/store/conf/ssl.repo.client.keystore"
-cp "/keystore/ssl.repo.client.truststore" "/data/templates/store/conf/ssl.repo.client.truststore"
-
-
+for x in ssl.repo.client.keystore ssl.repo.client.truststore ssl-keystore-passwords.properties ssl-truststore-passwords.properties
+do
+	cp /keystore/${x} /data/workspace-SpacesStore/conf/${x}
+	cp /keystore/${x} /data/archive-SpacesStore/conf/${x}
+	cp /keystore/${x} /data/templates/test/conf/${x}
+	cp /keystore/${x} /data/templates/store/conf/${x}
+done
