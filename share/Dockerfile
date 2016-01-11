@@ -6,6 +6,9 @@ COPY files/share-config-custom.xml /tomcat/shared/classes/alfresco/web-extension
 
 COPY files/log4j.properties /tomcat/shared/classes/alfresco/extension/log4j.properties
 
+COPY files/video-thumbnail-context.xml /tomcat/shared/classes/alfresco/extension/video-thumbnail-context.xml
+COPY files/video-transformation-context.xml /tomcat/shared/classes/alfresco/extension/video-transformation-context.xml
+
 
 COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
