@@ -40,6 +40,7 @@ registrator:
     - solr
     - share
     - mysql
+    - httpd
   after:
     - consul
   command: "-internal consul://consul:8500"
@@ -95,6 +96,21 @@ solr:
     - alfresco/solr/logs:/logs
   upwhen:
     logmsg: "INFO: Server startup in "
+    timeout: 60
+httpd:
+  build: httpd
+  options:
+    - "--expose=80"
+    - "--expose=443"
+  ports:
+    - "80:80"
+    - "443:443"
+  dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
+  volumes:
+    - httpd/www:/var/www/html
+    - httpd/logs:/var/log/apache2
+  upwhen:
+    logmsg: "resuming normal operations"
     timeout: 60
 mysql:
   hostname: mysql.service.consul

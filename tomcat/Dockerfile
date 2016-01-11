@@ -4,13 +4,13 @@
 
 FROM marsbard/base
 
-
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
 	apt-get update && \
-	apt-get install -y oracle-java8-installer unzip python-pip curl pwgen && \
+	apt-get install -y oracle-java8-installer unzip python-pip curl pwgen libtcnative-1 apache2-dev libapr1-dev libaprutil1-dev apache2 openssl && \
 	rm -rf /var/lib/apt/lists/* && \
-	rm -rf /var/cache/oracle-jdk8-installer
+	rm -rf /var/cache/oracle-jdk8-installer 
+
 
 
 # Define commonly used JAVA_HOME variable
@@ -25,7 +25,13 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
     wget -qO- https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz.md5 | md5sum -c - && \
     tar zxf apache-tomcat-*.tar.gz && \
     rm apache-tomcat-*.tar.gz && \
-    mv apache-tomcat* tomcat
+    mv apache-tomcat* tomcat 
+
+RUN cd /tomcat/bin && tar -zxvf tomcat-native.tar.gz && \
+    cd tomcat-native*-src/jni/native && \
+    pwd && ls -alrt /usr/bin/apr* && \
+    mkdir -p /usr/local/apr && cp /usr/bin/apr-1-config /usr/local/apr && \
+    ./configure --with-apr=/usr/local/apr --with-java-home=/usr/lib/jvm/java-8-oracle --with-ssl=$HOME/OPENSSL && make && make install 
 
 RUN rm -fr /tomcat/webapps/*
 
@@ -34,5 +40,6 @@ RUN rm -fr /tomcat/webapps/*
 EXPOSE 8080
 
 ENV CATALINA_HOME /tomcat
+ENV CATALINA_OPTS "-Djava.library.path=/usr/local/apr/lib"
 
 CMD ["/tomcat/bin/catalina.sh", "run"]
