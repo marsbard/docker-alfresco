@@ -1,5 +1,7 @@
 #!/bin/sh
 
-mkdir -p /data/lock
+mkdir -p /data/lock /data/run /var/www/localhost
 
-/usr/sbin/apache2 -DFOREGROUND
+apache2 -X
+
+echo Apache ended
