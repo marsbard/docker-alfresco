@@ -40,7 +40,7 @@ registrator:
     - solr
     - share
     - mysql
-    - httpd
+    - httpd2
   after:
     - consul
   command: "-internal consul://consul:8500"
@@ -97,8 +97,8 @@ solr:
   upwhen:
     logmsg: "INFO: Server startup in "
     timeout: 60
-httpd:
-  build: httpd
+httpd2:
+  build: httpd2
   options:
     - "--expose=80"
     - "--expose=443"
@@ -107,8 +107,9 @@ httpd:
     - "443:443"
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
-    - httpd/www:/var/www/html
-    - httpd/logs:/var/log/apache2
+    - www:/var/www/html
+    - logs:/var/log/apache2
+    - data:/data
   upwhen:
     logmsg: "resuming normal operations"
     timeout: 60
