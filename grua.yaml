@@ -107,11 +107,13 @@ httpd2:
     - "443:443"
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
-    - www:/var/www/html
-    - logs:/var/log/apache2
+    - www:/usr/local/apache2/htdocs
+    - logs:/usr/local/apache2/logs
+    - ssl:/etc/ssl
     - data:/data
   upwhen:
     logmsg: "resuming normal operations"
+    logfile: logs/error.log
     timeout: 60
 mysql:
   hostname: mysql.service.consul
