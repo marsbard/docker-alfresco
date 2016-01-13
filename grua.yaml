@@ -112,7 +112,8 @@ httpd2:
     - ssl:/etc/ssl
     - data:/data
   upwhen:
-    logmsg: "resuming normal operations"
+    #logmsg: "resuming normal operations"
+    logmsg: "start_threads: Using epoll"
     logfile: logs/error.log
     timeout: 60
 mysql:
