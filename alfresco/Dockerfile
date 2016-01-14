@@ -30,5 +30,8 @@ RUN mkdir /logs
 
 COPY files/tmp/mysql.jdbc.jar /tomcat/lib
 
+# we mount this with /ffbin --volumes-from ffmpeg
+RUN ln -s /ffbin/ffmpeg /usr/local/bin/ffmpeg
+
 VOLUME /data
 VOLUME /logs

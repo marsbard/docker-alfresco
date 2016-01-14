@@ -40,7 +40,7 @@ registrator:
     - solr
     - share
     - mysql
-    - httpd2
+    - httpd
   after:
     - consul
   command: "-internal consul://consul:8500"
@@ -54,6 +54,7 @@ alfresco:
     - "--expose=8443"
     - "--add-host=alfresco.service.consul:127.0.0.1"
     - "--privileged" # TEMP ONLY for debugging with strace
+    - "--volumes-from ffmpeg"
   ports:
     - "8081:8080"
   upwhen:
@@ -97,8 +98,8 @@ solr:
   upwhen:
     logmsg: "INFO: Server startup in "
     timeout: 60
-httpd2:
-  build: httpd2
+httpd:
+  build: httpd
   options:
     - "--expose=80"
     - "--expose=443"
