@@ -25,8 +25,8 @@ consul:
     - 8500:8500
     - "53:53"
   volumes:
-    - consul/config:/config
-    - consul/data:/data
+    - config:/config
+    - data:/data
   command: "-data-dir=/data -bootstrap-expect 1 -client 0.0.0.0"
 registrator:
   image: gliderlabs/registrator:latest
@@ -54,7 +54,6 @@ alfresco:
     - "--expose=8443"
     - "--add-host=alfresco.service.consul:127.0.0.1"
     - "--privileged" # TEMP ONLY for debugging with strace
-    - "--volumes-from ffmpeg"
   ports:
     - "8081:8080"
   upwhen:
@@ -75,7 +74,7 @@ share:
   ports:
     - "8080:8080"
   volumes: 
-    - alfresco/share:/data
+    - data:/data
   hostname: share.service.consul
   after:
     - alfresco
@@ -92,9 +91,9 @@ solr:
     - "8443:8443"
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
-    - alfresco/solr/data:/data
-    - alfresco/solr/content:/content
-    - alfresco/solr/logs:/logs
+    - data:/data
+    - content:/content
+    - logs:/logs
   upwhen:
     logmsg: "INFO: Server startup in "
     timeout: 60
@@ -117,6 +116,8 @@ httpd:
     logmsg: "start_threads: Using epoll"
     logfile: logs/error.log
     timeout: 60
+  before:
+    - alfresco
 mysql:
   hostname: mysql.service.consul
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
@@ -124,7 +125,7 @@ mysql:
   options:
     - "--expose=3306"
   volumes: 
-    - alfresco/mysql:/var/lib/mysql
+    - data:/var/lib/mysql
   environment:
     MYSQL_DATABASE: alfresco
     MYSQL_USER: alfresco
