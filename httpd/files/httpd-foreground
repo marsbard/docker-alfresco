@@ -2,6 +2,11 @@
 #set -e
 set -x
 
+if [ ! -f /usr/local/apache2/conf/httpd.conf ]
+then
+	perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' < /tmp/httpd.conf.tpl > /usr/local/apache2/conf/httpd.conf
+fi
+
 echo Removing old PID files
 # Apache gets grumpy about PID files pre-existing 
 rm -f /usr/local/apache2/logs/httpd.pid

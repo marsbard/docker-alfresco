@@ -85,6 +85,8 @@ solr:
     timeout: 60
 httpd:
   build: httpd
+  environment:
+    DOMAIN_NAME: <% ENV ALF_DOMAIN_NAME | localhost.local %>
   options:
     - "--expose=80"
     - "--expose=443"
@@ -114,7 +116,7 @@ mysql:
     MYSQL_DATABASE: <% ENV ALF_MYSQL_DATABASE | alfresco %>
     MYSQL_USER: <% ENV ALF_MYSQL_USER | alfresco %>
     MYSQL_PASSWORD: <% ENV ALF_MYSL_PASSWORD alfresco %>
-    MYSQL_ROOT_PASSWORD: alfresco %>
+    MYSQL_ROOT_PASSWORD: <% ENV ALF_MYSQL_ROOT_PASSWORD alfresco %>
   after:
     - consul
   before:

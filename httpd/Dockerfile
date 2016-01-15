@@ -4,7 +4,17 @@ VOLUME /data
 
 RUN apt-get update && apt-get -y install openssl
 
-COPY files/httpd.conf /usr/local/apache2/conf/httpd.conf
+#COPY files/httpd.conf /usr/local/apache2/conf/httpd.conf
+
+COPY files/httpd.conf.tpl /tmp/httpd.conf.tpl
+
+# thanks to http://stackoverflow.com/a/2916159/370191, luckily our slightly bloated ubuntu base already has perl
+# this script replaces any "${}" templates with their equivalent value from the same named enviromnent variable
+RUN perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' < httpd.conf.tpl > /usr/local/apache2/conf/httpd.conf
+
+# remove conf file so our first run will generate it including templating the environment
+RUN rm /usr/local/apache2/conf/httpd.conf
+
 
 COPY files/httpd-foreground /usr/local/bin/httpd-foreground
 
