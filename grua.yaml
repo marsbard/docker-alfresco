@@ -20,10 +20,6 @@ consul:
     - "--expose=8300"
     - "--expose=8500"
     - "--expose=53"
-  ports:
-    - 8300:8300
-    - 8500:8500
-    - "53:53"
   volumes:
     - config:/config
     - data:/data
@@ -51,11 +47,7 @@ alfresco:
     - "--expose=2021"
     - "--expose=7070"
     - "--expose=8080"
-    - "--expose=8443"
-    - "--add-host=alfresco.service.consul:127.0.0.1"
-    - "--privileged" # TEMP ONLY for debugging with strace
-  ports:
-    - "8081:8080"
+      # - "--add-host=alfresco.service.consul:127.0.0.1"
   upwhen:
     logmsg: "INFO: Server startup in "
     timeout: 120
@@ -63,32 +55,26 @@ alfresco:
     - solr
     - share
   volumes: 
-    - alfresco/repo/data:/data
-    - alfresco/repo/logs:/logs
-  hostname: alfresco
+    - data:/data
+    - logs:/logs
 share:
   build: share
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   options:
     - "--expose=8080"
-  ports:
-    - "8080:8080"
   volumes: 
     - data:/data
-  hostname: share.service.consul
   after:
     - alfresco
   upwhen:
     logmsg: "INFO: Server startup in "
     timeout: 60
-  before:
+  after:
     - solr
 solr:
   build: solr
   options:
     - "--expose=8443"
-  ports:
-    - "8443:8443"
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   volumes:
     - data:/data
@@ -112,14 +98,12 @@ httpd:
     - ssl:/etc/ssl
     - data:/data
   upwhen:
-    #logmsg: "resuming normal operations"
     logmsg: "start_threads: Using epoll"
     logfile: logs/error.log
     timeout: 60
-  before:
-    - alfresco
+  after:
+    - share
 mysql:
-  hostname: mysql.service.consul
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   image: mysql:5.6
   options:
@@ -127,10 +111,10 @@ mysql:
   volumes: 
     - data:/var/lib/mysql
   environment:
-    MYSQL_DATABASE: alfresco
-    MYSQL_USER: alfresco
-    MYSQL_PASSWORD: alfresco
-    MYSQL_ROOT_PASSWORD: alfresco
+    MYSQL_DATABASE: <% ENV ALF_MYSQL_DATABASE | alfresco %>
+    MYSQL_USER: <% ENV ALF_MYSQL_USER | alfresco %>
+    MYSQL_PASSWORD: <% ENV ALF_MYSL_PASSWORD alfresco %>
+    MYSQL_ROOT_PASSWORD: alfresco %>
   after:
     - consul
   before:
@@ -139,7 +123,6 @@ mysql:
     logmsg: "mysqld: ready for connections"
     sleep: 2
 postfix:
-  hostname: postfix
   dns: <% INSPECT consul {{ .NetworkSettings.IPAddress }} %>
   image: "catatnight/postfix"
   options:
@@ -155,11 +138,5 @@ haveged:
     - alfresco
     - share
     - solr
-dockerui:
-  image: dockerui/dockerui
-  ports:
-    - "9000:9000"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
 libreoffice:
   image: jamotion/odoo-soffice 
