@@ -14,4 +14,4 @@ You need to install https://github.com/marsbard/grua
 
 `$ grua stack`
 
-At the end you should be able to visit https://localhost/share and login with admin/admin
+At the end you should be able to visit [https://localhost/share](https://localhost/share) and login with admin/admin
