@@ -1,30 +1,17 @@
 # docker-alfresco
 
-Containerised alfresco
-
-* Enter working dir
-
-`cd docker-alfresco`
-
-* First you need to build the depended-upon 'marsbard/tomcat' image
-
-`tomcat/build.sh`
-
-* Get all the wars etc (eventually this will be folded into the images)
-
-`./get.sh`
 
 
-* Compose
+## Containerised alfresco
 
-`docker-compose build`
+You need to install https://github.com/marsbard/grua
 
+* To get started, build all the containers:
 
-* Run
+`$ grua fill`
 
-`docker-compose up`
+* Then stack the composition
 
+`$ grua stack`
 
-You will find various folders being created under /data on your docker host - this could be mapped to a network
-drive first if you like; then shutting down an instance on one docker host, you could resurrect the instance on
-a second docker host and it would have access to all the data from the network drive.
+At the end you should be able to visit http://localhost/share and login with admin/admin
