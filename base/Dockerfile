@@ -2,12 +2,7 @@ FROM ubuntu:14.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN echo apt-get -y --no-install-recommends install \$* > /install
-RUN chmod +x /install
-
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
      python-pip \
      libapr1 \
      libaprutil1 \
@@ -17,8 +12,7 @@ RUN apt-get install -y \
      libssl1.0.0 \
      libaugeas0 \
      libssl-dev \
-     libffi-dev
-
-RUN /install wget curl telnet dnsutils software-properties-common netcat-traditional git \
-	ca-certificates
+     libffi-dev \
+		 wget curl telnet dnsutils software-properties-common netcat-traditional git \
+	   ca-certificates
 
