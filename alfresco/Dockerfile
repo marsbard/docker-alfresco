@@ -6,12 +6,13 @@ RUN apt-get update && apt-get -y install libjpeg62 libgif4 libart-2.0-2 libfreet
 RUN wget -P /tmp/ http://archive.canonical.com/ubuntu/pool/partner/s/swftools/swftools_0.9.0-0ubuntu2_amd64.deb
 RUN dpkg -i /tmp/swftools_0.9.0-0ubuntu2_amd64.deb
 
-
 COPY files/tmp/alfresco.war /tomcat/webapps
 RUN unzip /tomcat/webapps/alfresco.war -d /tomcat/webapps/alfresco
 COPY files/server.xml /tomcat/conf/server.xml
 COPY files/catalina.properties /tomcat/conf/catalina.properties
 COPY files/alfresco-global.properties /tomcat/shared/classes/alfresco-global.properties
+COPY files/video-thumbnail-context.xml /tomcat/shared/classes/alfresco/extension/video-thumbnail-context.xml
+COPY files/video-transformation-context.xml /tomcat/shared/classes/alfresco/extension/video-transformation-context.xml
 COPY files/tomcat-users.xml /tomcat/conf/tomcat-users.xml
 
 COPY files/log4j.properties /tomcat/webapps/alfresco/WEB-INF/classes/log4j.properties
@@ -28,6 +29,9 @@ RUN mkdir -p /tomcat/shared/lib
 RUN mkdir /logs
 
 COPY files/tmp/mysql.jdbc.jar /tomcat/lib
+
+# we mount this with /ffbin --volumes-from ffmpeg
+RUN ln -s /ffbin/ffmpeg /usr/local/bin/ffmpeg
 
 VOLUME /data
 VOLUME /logs
