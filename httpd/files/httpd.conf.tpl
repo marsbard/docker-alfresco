@@ -193,7 +193,7 @@ ServerAdmin you@example.com
 #
 #ServerName www.example.com:80
 
-ServerName ${ALF_DOMAIN_NAME}
+ServerName ${DOMAIN_NAME}
 
 #
 # Deny access to the entirety of your server's filesystem. You must
@@ -504,23 +504,23 @@ SSLRandomSeed connect builtin
 <VirtualHost *:443>
 
   ## Vhost docroot
-  #DocumentRoot "/var/www/${ALF_DOMAIN_NAME}"
+  #DocumentRoot "/var/www/${DOMAIN_NAME}"
 	DocumentRoot "/usr/local/apache2/htdocs"
 
-  ## Directories, there should at least be a declaration for /var/www/${ALF_DOMAIN_NAME}
+  ## Directories, there should at least be a declaration for /var/www/${DOMAIN_NAME}
 
-  #<Directory "/var/www/${ALF_DOMAIN_NAME}">
+  #<Directory "/var/www/${DOMAIN_NAME}">
   #  Options Indexes FollowSymLinks MultiViews
   #  AllowOverride None
   #  Require all granted
   #</Directory>
 
   ## Logging
-  #ErrorLog "/var/log/apache/${ALF_DOMAIN_NAME}_error_ssl.log"
+  #ErrorLog "/var/log/apache/${DOMAIN_NAME}_error_ssl.log"
 	#ErrorLog /proc/self/fd/1
 	ErrorLog "logs/ssl-error.log"
   ServerSignature Off
-  #CustomLog "/var/log/apache/${ALF_DOMAIN_NAME}_access_ssl.log" combined
+  #CustomLog "/var/log/apache/${DOMAIN_NAME}_access_ssl.log" combined
 	CustomLog "logs/ssl-access.log" combined
 	#CustomLog "/proc/self/fd/1" combined
   ErrorDocument 503 /errdocs/503.html
@@ -550,6 +550,6 @@ SSLRandomSeed connect builtin
 
   ## SSL directives
   SSLEngine on
-  SSLCertificateFile      "/etc/ssl/${ALF_DOMAIN_NAME}.cert"
-  SSLCertificateKeyFile   "/etc/ssl/${ALF_DOMAIN_NAME}.key"
+  SSLCertificateFile      "/etc/ssl/${DOMAIN_NAME}.cert"
+  SSLCertificateKeyFile   "/etc/ssl/${DOMAIN_NAME}.key"
 </VirtualHost>
