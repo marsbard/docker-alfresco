@@ -141,4 +141,5 @@ haveged:
     - share
     - solr
 libreoffice:
-  image: jamotion/odoo-soffice 
+  #image: jamotion/odoo-soffice 
+  build: libreoffice
