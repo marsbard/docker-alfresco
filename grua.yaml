@@ -15,7 +15,7 @@ tomcat:
 consul:
   build: consul
   upwhen: 
-    logmsg: "consul: New leader elected: consul"
+    logmsg: "consul: New leader elected: "
   options:
     - "--expose=8300"
     - "--expose=8500"
