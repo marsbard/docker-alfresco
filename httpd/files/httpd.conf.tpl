@@ -149,7 +149,16 @@ LoadModule dir_module modules/mod_dir.so
 #LoadModule speling_module modules/mod_speling.so
 #LoadModule userdir_module modules/mod_userdir.so
 LoadModule alias_module modules/mod_alias.so
-#LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule rewrite_module modules/mod_rewrite.so
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+
+
+#RewriteCond %{HTTPS} on
+RewriteRule ^/$ /share [R=301]
+RewriteRule ^//$ /share [R=301]
 
 <IfModule unixd_module>
 #
