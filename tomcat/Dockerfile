@@ -4,10 +4,19 @@
 
 FROM marsbard/base
 
+
+# http://layer0.authentise.com/docker-4-useful-tips-you-may-not-know-about.html
+ENV DEBIAN_FRONTEND=noninteractive
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse" > /etc/apt/sources.list && \
+  echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+	echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+	DEBIAN_FRONTEND=noninteractive apt-get update
+
+
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
 	apt-get update && \
-	apt-get install -y oracle-java8-installer unzip python-pip curl pwgen libtcnative-1 apache2-dev libapr1-dev libaprutil1-dev apache2 openssl && \
+	apt-get install --no-install-recommends -y oracle-java8-installer unzip python-pip curl pwgen libtcnative-1 apache2-dev libapr1-dev libaprutil1-dev apache2 openssl && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /var/cache/oracle-jdk8-installer 
 

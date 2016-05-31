@@ -1,8 +1,15 @@
 FROM marsbard/tomcat
 
+# http://layer0.authentise.com/docker-4-useful-tips-you-may-not-know-about.html
+ENV DEBIAN_FRONTEND=noninteractive
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse" > /etc/apt/sources.list && \
+  echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+	echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+	DEBIAN_FRONTEND=noninteractive apt-get update
+
 # http://serverfault.com/a/634227
 # See: http://fcorti.com/2014/10/13/how-to-install-alfresco-5-0-ubuntu-14-04-lts/
-RUN apt-get update && apt-get -y install libjpeg62 libgif4 libart-2.0-2 libfreetype6 gsfonts libfontconfig1 imagemagick
+RUN apt-get update && apt-get --no-install-recommends -y install libjpeg62 libgif4 libart-2.0-2 libfreetype6 gsfonts libfontconfig1 imagemagick
 RUN wget -P /tmp/ http://archive.canonical.com/ubuntu/pool/partner/s/swftools/swftools_0.9.0-0ubuntu2_amd64.deb
 RUN dpkg -i /tmp/swftools_0.9.0-0ubuntu2_amd64.deb
 

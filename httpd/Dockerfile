@@ -2,7 +2,7 @@ FROM httpd:2.4
 
 VOLUME /data
 
-RUN apt-get update && apt-get -y install openssl 
+RUN apt-get update && apt-get --no-install-recommends -y install openssl 
 
 COPY files/httpd.conf.tpl /tmp/httpd.conf.tpl
 
