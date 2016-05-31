@@ -36,11 +36,11 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
     rm apache-tomcat-*.tar.gz && \
     mv apache-tomcat* tomcat 
 
-RUN cd /tomcat/bin && tar -zxvf tomcat-native.tar.gz && \
-    cd tomcat-native*-src/jni/native && \
-    pwd && ls -alrt /usr/bin/apr* && \
-    mkdir -p /usr/local/apr && cp /usr/bin/apr-1-config /usr/local/apr && \
-    ./configure --with-apr=/usr/local/apr --with-java-home=/usr/lib/jvm/java-8-oracle --with-ssl=$HOME/OPENSSL && make && make install 
+#RUN cd /tomcat/bin && tar -zxvf tomcat-native.tar.gz && \
+#    cd tomcat-native*-src/jni/native && \
+#    pwd && ls -alrt /usr/bin/apr* && \
+#    mkdir -p /usr/local/apr && cp /usr/bin/apr-1-config /usr/local/apr && \
+#    ./configure --with-apr=/usr/local/apr --with-java-home=/usr/lib/jvm/java-8-oracle --with-ssl=$HOME/OPENSSL && make && make install 
 
 RUN rm -fr /tomcat/webapps/*
 
